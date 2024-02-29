@@ -4,7 +4,7 @@ package chrono;
  * The chronometer class is composed of the three cyclic counters. We can count
  * until 59 hours 59 minutes and 59 seconds.
  * 
- * @author simu soccer
+ * @author
  **/
 public class Chronometer {
 	private CyclicCounter minute = new CyclicCounter(0, 90, 0);

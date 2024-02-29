@@ -12,10 +12,10 @@ public class Player {
 
 	private int x;
 	private int y;
-	private boolean ball ;
+	private boolean is_have_ball ;
 
 	enum position {
-		ATTACK, DEFENSE, MIDDLE, GOALKEEPER;
+		FORWARD, MIDFIELDER, DEFENDER, GOALKEEPER;
 	}
 
 	private position player_position;
@@ -33,15 +33,15 @@ public class Player {
 		this.x = x;
 		this.y = y;
 		this.name = name;
-		this.ball = ball ;
+		this.is_have_ball = ball ;
 	}
 
 	public boolean isBall() {
-		return ball;
+		return is_have_ball;
 	}
 
 	public void setBall(boolean ball) {
-		this.ball = ball;
+		this.is_have_ball = ball;
 	}
 
 	public int getSpeed() {

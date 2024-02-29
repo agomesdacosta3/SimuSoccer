@@ -19,7 +19,7 @@ import delimitations.Surface;
  * 
  * There is no algorithmic processing in this class.
  * 
- * @author simu soccer
+ * @author
  * 
  */
 public class Dashboard extends JPanel {
@@ -77,87 +77,87 @@ public class Dashboard extends JPanel {
 		
 		Team.createteams();
 
-		/* Equipe bleu */
+		/* Equipe dom */
 
 		
         // Attaquants
 
         g.setColor(Color.BLUE);
 
-        g.drawRect(Team.players1.get(10).getX(), Team.players1.get(10).getY(), 10, 10);
-        g.drawRect(Team.players1.get(9).getX(), Team.players1.get(9).getY(), 10, 10);
+        g.drawRect(Team.squad_dom.get(10).getX(), Team.squad_dom.get(10).getY(), 10, 10);
+        g.drawRect(Team.squad_dom.get(9).getX(), Team.squad_dom.get(9).getY(), 10, 10);
 
-        g.fillRect(Team.players1.get(10).getX(), Team.players1.get(10).getY(), 10, 10);
-        g.fillRect(Team.players1.get(9).getX(), Team.players1.get(9).getY(), 10, 10);
+        g.fillRect(Team.squad_dom.get(10).getX(), Team.squad_dom.get(10).getY(), 10, 10);
+        g.fillRect(Team.squad_dom.get(9).getX(), Team.squad_dom.get(9).getY(), 10, 10);
 
         // Milieux
 
-        g.drawRect(Team.players1.get(8).getX(), Team.players1.get(8).getY(), 10, 10);
-        g.drawRect(Team.players1.get(7).getX(), Team.players1.get(7).getY(), 10, 10);
-        g.drawRect(Team.players1.get(6).getX(), Team.players1.get(6).getY(), 10, 10);
-        g.drawRect(Team.players1.get(5).getX(), Team.players1.get(5).getY(), 10, 10);
+        g.drawRect(Team.squad_dom.get(8).getX(), Team.squad_dom.get(8).getY(), 10, 10);
+        g.drawRect(Team.squad_dom.get(7).getX(), Team.squad_dom.get(7).getY(), 10, 10);
+        g.drawRect(Team.squad_dom.get(6).getX(), Team.squad_dom.get(6).getY(), 10, 10);
+        g.drawRect(Team.squad_dom.get(5).getX(), Team.squad_dom.get(5).getY(), 10, 10);
 
-        g.fillRect(Team.players1.get(8).getX(), Team.players1.get(8).getY(), 10, 10);
-        g.fillRect(Team.players1.get(7).getX(), Team.players1.get(7).getY(), 10, 10);
-        g.fillRect(Team.players1.get(6).getX(), Team.players1.get(6).getY(), 10, 10);
-        g.fillRect(Team.players1.get(5).getX(), Team.players1.get(5).getY(), 10, 10);
+        g.fillRect(Team.squad_dom.get(8).getX(), Team.squad_dom.get(8).getY(), 10, 10);
+        g.fillRect(Team.squad_dom.get(7).getX(), Team.squad_dom.get(7).getY(), 10, 10);
+        g.fillRect(Team.squad_dom.get(6).getX(), Team.squad_dom.get(6).getY(), 10, 10);
+        g.fillRect(Team.squad_dom.get(5).getX(), Team.squad_dom.get(5).getY(), 10, 10);
 
         // Defenseurs
 
-        g.drawRect(Team.players1.get(4).getX(), Team.players1.get(4).getY(), 10, 10);
-        g.drawRect(Team.players1.get(3).getX(), Team.players1.get(3).getY(), 10, 10);
-        g.drawRect(Team.players1.get(2).getX(), Team.players1.get(2).getY(), 10, 10);
-        g.drawRect(Team.players1.get(1).getX(), Team.players1.get(1).getY(), 10, 10);
+        g.drawRect(Team.squad_dom.get(4).getX(), Team.squad_dom.get(4).getY(), 10, 10);
+        g.drawRect(Team.squad_dom.get(3).getX(), Team.squad_dom.get(3).getY(), 10, 10);
+        g.drawRect(Team.squad_dom.get(2).getX(), Team.squad_dom.get(2).getY(), 10, 10);
+        g.drawRect(Team.squad_dom.get(1).getX(), Team.squad_dom.get(1).getY(), 10, 10);
 
-        g.fillRect(Team.players1.get(4).getX(), Team.players1.get(4).getY(), 10, 10);
-        g.fillRect(Team.players1.get(3).getX(), Team.players1.get(3).getY(), 10, 10);
-        g.fillRect(Team.players1.get(2).getX(), Team.players1.get(2).getY(), 10, 10);
-        g.fillRect(Team.players1.get(1).getX(), Team.players1.get(1).getY(), 10, 10);
+        g.fillRect(Team.squad_dom.get(4).getX(), Team.squad_dom.get(4).getY(), 10, 10);
+        g.fillRect(Team.squad_dom.get(3).getX(), Team.squad_dom.get(3).getY(), 10, 10);
+        g.fillRect(Team.squad_dom.get(2).getX(), Team.squad_dom.get(2).getY(), 10, 10);
+        g.fillRect(Team.squad_dom.get(1).getX(), Team.squad_dom.get(1).getY(), 10, 10);
         // Gardien
 
-        g.drawRect(Team.players1.get(0).getX(), Team.players1.get(0).getY(), 10, 10);
-        g.fillRect(Team.players1.get(0).getX(), Team.players1.get(0).getY(), 10, 10);
+        g.drawRect(Team.squad_dom.get(0).getX(), Team.squad_dom.get(0).getY(), 10, 10);
+        g.fillRect(Team.squad_dom.get(0).getX(), Team.squad_dom.get(0).getY(), 10, 10);
 
-        /* Equipe rouge */
+        /* Equipe ext */
 
         // Attaquants
 
         g.setColor(Color.RED);
 
-        g.drawRect(Team.players2.get(10).getX(), Team.players2.get(10).getY(), 10, 10);
-        g.drawRect(Team.players2.get(9).getX(), Team.players2.get(9).getY(), 10, 10);
+        g.drawRect(Team.squad_ext.get(10).getX(), Team.squad_ext.get(10).getY(), 10, 10);
+        g.drawRect(Team.squad_ext.get(9).getX(), Team.squad_ext.get(9).getY(), 10, 10);
 
-        g.fillRect(Team.players2.get(10).getX(), Team.players2.get(10).getY(), 10, 10);
-        g.fillRect(Team.players2.get(9).getX(), Team.players2.get(9).getY(), 10, 10);
+        g.fillRect(Team.squad_ext.get(10).getX(), Team.squad_ext.get(10).getY(), 10, 10);
+        g.fillRect(Team.squad_ext.get(9).getX(), Team.squad_ext.get(9).getY(), 10, 10);
 
         // Milieux
 
-        g.drawRect(Team.players2.get(8).getX(), Team.players2.get(8).getY(), 10, 10);
-        g.drawRect(Team.players2.get(7).getX(), Team.players2.get(7).getY(), 10, 10);
-        g.drawRect(Team.players2.get(6).getX(), Team.players2.get(6).getY(), 10, 10);
-        g.drawRect(Team.players2.get(5).getX(), Team.players2.get(5).getY(), 10, 10);
+        g.drawRect(Team.squad_ext.get(8).getX(), Team.squad_ext.get(8).getY(), 10, 10);
+        g.drawRect(Team.squad_ext.get(7).getX(), Team.squad_ext.get(7).getY(), 10, 10);
+        g.drawRect(Team.squad_ext.get(6).getX(), Team.squad_ext.get(6).getY(), 10, 10);
+        g.drawRect(Team.squad_ext.get(5).getX(), Team.squad_ext.get(5).getY(), 10, 10);
 
-        g.fillRect(Team.players2.get(8).getX(), Team.players2.get(8).getY(), 10, 10);
-        g.fillRect(Team.players2.get(7).getX(), Team.players2.get(7).getY(), 10, 10);
-        g.fillRect(Team.players2.get(6).getX(), Team.players2.get(6).getY(), 10, 10);
-        g.fillRect(Team.players2.get(5).getX(), Team.players2.get(5).getY(), 10, 10);
+        g.fillRect(Team.squad_ext.get(8).getX(), Team.squad_ext.get(8).getY(), 10, 10);
+        g.fillRect(Team.squad_ext.get(7).getX(), Team.squad_ext.get(7).getY(), 10, 10);
+        g.fillRect(Team.squad_ext.get(6).getX(), Team.squad_ext.get(6).getY(), 10, 10);
+        g.fillRect(Team.squad_ext.get(5).getX(), Team.squad_ext.get(5).getY(), 10, 10);
 
         // Defenseurs
 
-        g.drawRect(Team.players2.get(4).getX(), Team.players2.get(4).getY(), 10, 10);
-        g.drawRect(Team.players2.get(3).getX(), Team.players2.get(3).getY(), 10, 10);
-        g.drawRect(Team.players2.get(2).getX(), Team.players2.get(2).getY(), 10, 10);
-        g.drawRect(Team.players2.get(1).getX(), Team.players2.get(1).getY(), 10, 10);
+        g.drawRect(Team.squad_ext.get(4).getX(), Team.squad_ext.get(4).getY(), 10, 10);
+        g.drawRect(Team.squad_ext.get(3).getX(), Team.squad_ext.get(3).getY(), 10, 10);
+        g.drawRect(Team.squad_ext.get(2).getX(), Team.squad_ext.get(2).getY(), 10, 10);
+        g.drawRect(Team.squad_ext.get(1).getX(), Team.squad_ext.get(1).getY(), 10, 10);
 
-        g.fillRect(Team.players2.get(4).getX(), Team.players2.get(4).getY(), 10, 10);
-        g.fillRect(Team.players2.get(3).getX(), Team.players2.get(3).getY(), 10, 10);
-        g.fillRect(Team.players2.get(2).getX(), Team.players2.get(2).getY(), 10, 10);
-        g.fillRect(Team.players2.get(1).getX(), Team.players2.get(1).getY(), 10, 10);
+        g.fillRect(Team.squad_ext.get(4).getX(), Team.squad_ext.get(4).getY(), 10, 10);
+        g.fillRect(Team.squad_ext.get(3).getX(), Team.squad_ext.get(3).getY(), 10, 10);
+        g.fillRect(Team.squad_ext.get(2).getX(), Team.squad_ext.get(2).getY(), 10, 10);
+        g.fillRect(Team.squad_ext.get(1).getX(), Team.squad_ext.get(1).getY(), 10, 10);
         
         // Gardien
 
-        g.drawRect(Team.players2.get(0).getX(), Team.players2.get(0).getY(), 10, 10);
-        g.fillRect(Team.players2.get(0).getX(), Team.players2.get(0).getY(), 10, 10);
+        g.drawRect(Team.squad_ext.get(0).getX(), Team.squad_ext.get(0).getY(), 10, 10);
+        g.fillRect(Team.squad_ext.get(0).getX(), Team.squad_ext.get(0).getY(), 10, 10);
 	
 	}
 }

@@ -5,47 +5,48 @@ import java.util.Random;
 
 public class Match {
 
-	public static ArrayList<Player> players1 = new ArrayList<>();
-	public static ArrayList<Player> players2 = new ArrayList<>();
+	public static ArrayList<Player> squad1 = new ArrayList<>();
+	public static ArrayList<Player> squad2 = new ArrayList<>();
 
-	private Team team1 = new Team("team1", players1, "blue");
-	private Team team2 = new Team("team2", players2, "red");
-	private int scoreteam1;
-	private int scoreteam2;
+	private Team dom_team = new Team("DOM", squad1);
+	private Team ext_team = new Team("EXT", squad2);
+	
+	private int score_dom_team;
+	private int score_ext_team;
 	private int time_match = 90;
 
 	private Ball ball = new Ball(250,150);
-
-	public Team getTeam1() {
-		return team1;
+	
+	public Team getDom_team() {
+		return dom_team;
 	}
 
-	public void setTeam1(Team team1) {
-		this.team1 = team1;
+	public void setDom_team(Team dom_team) {
+		this.dom_team = dom_team;
 	}
 
-	public Team getTeam2() {
-		return team2;
+	public Team getExt_team() {
+		return ext_team;
 	}
 
-	public void setTeam2(Team team2) {
-		this.team2 = team2;
+	public void setExt_team(Team ext_team) {
+		this.ext_team = ext_team;
 	}
 
-	public int getScoreteam1() {
-		return scoreteam1;
+	public int getScore_dom_team() {
+		return score_dom_team;
 	}
 
-	public void setScoreteam1(int scoreteam1) {
-		this.scoreteam1 = scoreteam1;
+	public void setScore_dom_team(int score_dom_team) {
+		this.score_dom_team = score_dom_team;
 	}
 
-	public int getScoreteam2() {
-		return scoreteam2;
+	public int getScore_ext_team() {
+		return score_ext_team;
 	}
 
-	public void setScoreteam2(int scoreteam2) {
-		this.scoreteam2 = scoreteam2;
+	public void setScore_ext_team(int score_ext_team) {
+		this.score_ext_team = score_ext_team;
 	}
 
 	public int getTime_match() {
@@ -70,19 +71,19 @@ public class Match {
 		int nb;
 		nb = random.nextInt(2);
 		Team.createteams();
-		// si le nombre aléatoire génère 1, ce sera l'équipe bleu qui engagera
+		// si le nombre aléatoire génère 1, ce sera l'équipe domicile qui engagera
 		if (nb == 1) {
-			Team.players2.get(10).setX(440);
-			Team.players2.get(10).setY(305);
-			Team.players2.get(9).setX(440);
-			Team.players2.get(9).setY(325);
-			Team.players2.get(10).setBall(true);
+			Team.squad_dom.get(10).setX(440);
+			Team.squad_dom.get(10).setY(305);
+			Team.squad_dom.get(9).setX(440);
+			Team.squad_dom.get(9).setY(325);
+			Team.squad_dom.get(10).setBall(true);
 		} else {
-			Team.players1.get(10).setX(440);
-			Team.players1.get(10).setY(305);
-			Team.players1.get(9).setX(440);
-			Team.players1.get(9).setY(325);
-			Team.players1.get(10).setBall(true);
+			Team.squad_ext.get(10).setX(440);
+			Team.squad_ext.get(10).setY(305);
+			Team.squad_ext.get(9).setX(440);
+			Team.squad_ext.get(9).setY(325);
+			Team.squad_ext.get(10).setBall(true);
 		}
 
 	}

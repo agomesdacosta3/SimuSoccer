@@ -3,7 +3,7 @@ package chrono;
 /**
  * The cyclic counter is a bounded counter with cyclic value change.
  * 
- * @author simu soccer
+ * @author
  **/
 public class CyclicCounter extends BoundedCounter {
 

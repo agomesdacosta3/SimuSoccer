@@ -5,7 +5,7 @@ package chrono;
  * 
  * We can only increment or decrement the value by 1 each time.
  * 
- * @author simu soccer
+ * @author
  **/
 public class Counter {
 	private int value;

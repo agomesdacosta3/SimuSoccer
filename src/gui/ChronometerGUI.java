@@ -13,20 +13,17 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 
 import chrono.Chronometer;
 import chrono.CyclicCounter;
 import data.Ball;
-import data.Match;
 import data.Player;
 import data.Team;
-import process.Pass;
 
 /**
  * Main GUI class for chronometer.
  * 
- * @author Tianxiao.Liu@u-cergy.fr
+ * @author
  **/
 public class ChronometerGUI extends JFrame implements Runnable {
 	
@@ -39,19 +36,11 @@ public class ChronometerGUI extends JFrame implements Runnable {
 	 * The normal speed is 1000, e.q. one refresh per second (1000 milliseconds).
 	 */
 	private static final int CHRONO_SPEED = 100;
-
-	private static final int CHRONO_SPEED1 = 10;
 	
-	private static final int CHRONO_SPEED2 = 1;	
+	private Ball ball = new Ball(250,150);
 	
-	private Ball ballon = new Ball(250,150);
-	
-	public  ArrayList<Player> team1 = new ArrayList<>();
-	public  ArrayList<Player> team2 = new ArrayList<>();
-
-
-	private JRadioButton fiveButton=new JRadioButton("five");
-	private JRadioButton tenButton=new JRadioButton("ten");
+	public  ArrayList<Player> squad_dom = new ArrayList<>();
+	public  ArrayList<Player> squad_ext = new ArrayList<>();
 
 
 	public Chronometer getChronometer() {
@@ -68,11 +57,11 @@ public class ChronometerGUI extends JFrame implements Runnable {
 	private JButton startButton = new JButton(" Start ");
 	//private JButton clearButton = new JButton(" Clear ");
 	
-	private JLabel scoreteam1Label = new JLabel("Team1");
-    private JLabel scoreteam2Label = new JLabel("Team2");
+	private JLabel score_squad_dom_label = new JLabel("DOM");
+    private JLabel score_squad_ext_label = new JLabel("EXT");
 
-    private JLabel scoreteam1Value = new JLabel("");
-    private JLabel scoreteam2Value = new JLabel("");
+    private JLabel score_squad_dom_value = new JLabel("");
+    private JLabel score_squad_ext_value = new JLabel("");
 
 	private JLabel minuteLabel = new JLabel("Minute:");
 	private JLabel secondLabel = new JLabel("Second:");
@@ -106,21 +95,21 @@ public class ChronometerGUI extends JFrame implements Runnable {
 		updateValues();
 		
 		Team.createteams();
-		team1 = Team.players1 ;
-		team2 = Team.players2 ;
+		squad_dom = Team.squad_dom ;
+		squad_ext = Team.squad_ext ;
 
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
 		
-		scoreteam1Label.setFont(font);
-        control.add(scoreteam1Label);
-        scoreteam2Label.setFont(font);
-        control.add(scoreteam2Label);
+		score_squad_dom_label.setFont(font);
+        control.add(score_squad_dom_label);
+        score_squad_ext_label.setFont(font);
+        control.add(score_squad_ext_label);
 
-        scoreteam1Value.setFont(font);
-        control.add(scoreteam1Value);
-        scoreteam2Value.setFont(font);
-        control.add(scoreteam2Value);
+        score_squad_dom_value.setFont(font);
+        control.add(score_squad_dom_value);
+        score_squad_ext_value.setFont(font);
+        control.add(score_squad_ext_value);
         
 		control.setLayout(new FlowLayout(FlowLayout.CENTER));
 
@@ -137,14 +126,6 @@ public class ChronometerGUI extends JFrame implements Runnable {
 		startButton.setFont(font);
 		startButton.addActionListener(new StartStopAction());
 		control.add(startButton);
-		
-		fiveButton.setFont(font);
-		fiveButton.addActionListener(new SpeedAction1());
-		control.add(fiveButton);
-		
-		tenButton.setFont(font);
-		tenButton.addActionListener(new SpeedAction2());
-		control.add(tenButton);
 
 		/*clearButton.setFont(font);
 		clearButton.addActionListener(new ClearAction());
@@ -182,37 +163,36 @@ public class ChronometerGUI extends JFrame implements Runnable {
 
 		// This part is for graphical time printing.
 		
-		/*dashboard.setDefault_x_attaquant1_bleu(dashboard.getDefault_x_attaquant1_bleu()+10);
-		dashboard.setDefault_x_attaquant2_bleu(dashboard.getDefault_x_attaquant2_bleu()+10);
+		/*dashboard.setDefault_x_attaquant1_dom(dashboard.getDefault_x_attaquant1_dom()+10);
+		dashboard.setDefault_x_attaquant2_dom(dashboard.getDefault_x_attaquant2_dom()+10);
 		
-		dashboard.setDefault_x_milieu1_bleu(dashboard.getDefault_x_milieu1_bleu()+10);
-		dashboard.setDefault_x_milieu2_bleu(dashboard.getDefault_x_milieu2_bleu()+10);
-		dashboard.setDefault_x_milieu3_bleu(dashboard.getDefault_x_milieu3_bleu()+10);
-		dashboard.setDefault_x_milieu4_bleu(dashboard.getDefault_x_milieu4_bleu()+10);
+		dashboard.setDefault_x_milieu1_dom(dashboard.getDefault_x_milieu1_dom()+10);
+		dashboard.setDefault_x_milieu2_dom(dashboard.getDefault_x_milieu2_dom()+10);
+		dashboard.setDefault_x_milieu3_dom(dashboard.getDefault_x_milieu3_dom()+10);
+		dashboard.setDefault_x_milieu4_dom(dashboard.getDefault_x_milieu4_dom()+10);
 		
-		dashboard.setDefault_x_defenseur1_bleu(dashboard.getDefault_x_defenseur1_bleu()+10);
-		dashboard.setDefault_x_defenseur2_bleu(dashboard.getDefault_x_defenseur2_bleu()+10);
-		dashboard.setDefault_x_defenseur3_bleu(dashboard.getDefault_x_defenseur3_bleu()+10);
-		dashboard.setDefault_x_defenseur4_bleu(dashboard.getDefault_x_defenseur4_bleu()+10);
+		dashboard.setDefault_x_defenseur1_dom(dashboard.getDefault_x_defenseur1_dom()+10);
+		dashboard.setDefault_x_defenseur2_dom(dashboard.getDefault_x_defenseur2_dom()+10);
+		dashboard.setDefault_x_defenseur3_dom(dashboard.getDefault_x_defenseur3_dom()+10);
+		dashboard.setDefault_x_defenseur4_dom(dashboard.getDefault_x_defenseur4_dom()+10);
 		
-		dashboard.setDefault_x_attaquant1_rouge(dashboard.getDefault_x_attaquant1_rouge()-10);
-		dashboard.setDefault_x_attaquant2_rouge(dashboard.getDefault_x_attaquant2_rouge()-10);
+		dashboard.setDefault_x_attaquant1_ext(dashboard.getDefault_x_attaquant1_ext()-10);
+		dashboard.setDefault_x_attaquant2_ext(dashboard.getDefault_x_attaquant2_ext()-10);
 		
-		dashboard.setDefault_x_milieu1_rouge(dashboard.getDefault_x_milieu1_rouge()-10);
-		dashboard.setDefault_x_milieu2_rouge(dashboard.getDefault_x_milieu2_rouge()-10);
-		dashboard.setDefault_x_milieu3_rouge(dashboard.getDefault_x_milieu3_rouge()-10);
-		dashboard.setDefault_x_milieu4_rouge(dashboard.getDefault_x_milieu4_rouge()-10);
+		dashboard.setDefault_x_milieu1_ext(dashboard.getDefault_x_milieu1_ext()-10);
+		dashboard.setDefault_x_milieu2_ext(dashboard.getDefault_x_milieu2_ext()-10);
+		dashboard.setDefault_x_milieu3_ext(dashboard.getDefault_x_milieu3_ext()-10);
+		dashboard.setDefault_x_milieu4_ext(dashboard.getDefault_x_milieu4_ext()-10);
 		
-		dashboard.setDefault_x_defenseur1_rouge(dashboard.getDefault_x_defenseur1_rouge()-10);
-		dashboard.setDefault_x_defenseur2_rouge(dashboard.getDefault_x_defenseur2_rouge()-10);
-		dashboard.setDefault_x_defenseur3_rouge(dashboard.getDefault_x_defenseur3_rouge()-10);
-		dashboard.setDefault_x_defenseur4_rouge(dashboard.getDefault_x_defenseur4_rouge()-10);
+		dashboard.setDefault_x_defenseur1_ext(dashboard.getDefault_x_defenseur1_ext()-10);
+		dashboard.setDefault_x_defenseur2_ext(dashboard.getDefault_x_defenseur2_ext()-10);
+		dashboard.setDefault_x_defenseur3_ext(dashboard.getDefault_x_defenseur3_ext()-10);
+		dashboard.setDefault_x_defenseur4_ext(dashboard.getDefault_x_defenseur4_ext()-10);
 		
 		
 
 		// The dashboard needs to be reprinted when hour, minute or second values change.*/
 		
-		Pass.get_Player_Ball(ballon,team1,team2 );
 		dashboard.repaint();
 	}
 
@@ -252,8 +232,8 @@ public class ChronometerGUI extends JFrame implements Runnable {
 				//Match.engagement();
 				
 			//	Ball ballon = new Ball(250,150);
-			//	Pass.get_Player_Ball(ballon,Team.players1,Team.players2 );
-			//	Pass.pass_sequence(ballon,Team.players1,Team.players2 );
+			//	Pass.get_Player_Ball(ballon,Team.squad_dom,Team.squad_ext );
+			//	Pass.pass_sequence(ballon,Team.squad_dom,Team.squad_ext );
 			}
 		}
 	}
@@ -269,44 +249,6 @@ public class ChronometerGUI extends JFrame implements Runnable {
 		}
 
 	}
-	
-	private class SpeedAction1 implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent arg0) {
-            // TODO Auto-generated method stub
-
-            try {
-                Thread.sleep(CHRONO_SPEED1);
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-
-
-        }
-
-    }
-	
-	 private class SpeedAction2 implements ActionListener {
-
-	        @Override
-	        public void actionPerformed(ActionEvent arg0) {
-	            // TODO Auto-generated method stub
-
-	            try {
-	                Thread.sleep(CHRONO_SPEED2);
-	            } catch (InterruptedException e) {
-	                // TODO Auto-generated catch block
-	                e.printStackTrace();
-	            }
-
-
-
-	        }
-	       
-	 }
 	 
 	public static void main(String[] args) {
 		new ChronometerGUI("Simu soccer");
