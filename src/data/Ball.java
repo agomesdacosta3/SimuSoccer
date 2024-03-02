@@ -2,8 +2,8 @@ package data;
 
 public class Ball {
 	
-	private int positionx_Ball = 250 ;
-	private int positiony_Ball = 150;
+	private int positionx_Ball = 450 ;
+	private int positiony_Ball = 450 ;
 
 
 	public int getPositionx_Ball() {
