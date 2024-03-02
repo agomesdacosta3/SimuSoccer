@@ -4,79 +4,16 @@ import java.util.ArrayList;
 
 public class Team {
 	
-	public String nameTeam;
+	private String nameTeam;
 	
-	private static int default_x_gardien_dom = 100;
-	private static int default_y_gardien_dom = 305;
-
-	private static int default_x_defenseur1_dom = 200;
-	private static int default_y_defenseur1_dom= 100;
-
-	private static int default_x_defenseur2_dom = 200;
-	private static int default_y_defenseur2_dom = 265;
-
-	private static int default_x_defenseur3_dom = 200;
-	private static int default_y_defenseur3_dom = 350;
-
-	private static int default_x_defenseur4_dom = 200;
-	private static int default_y_defenseur4_dom = 500;
-
-	private static int default_x_milieu1_dom = 270;
-	private static int default_y_milieu1_dom = 100;
-
-	private static int default_x_milieu2_dom = 270;
-	private static int default_y_milieu2_dom = 265;
-
-	private static int default_x_milieu3_dom = 270;
-	private static int default_y_milieu3_dom = 350;
-
-	private static int default_x_milieu4_dom = 270;
-	private static int default_y_milieu4_dom = 500;
-
-	private static int default_x_attaquant1_dom = 360;
-	private static int default_y_attaquant1_dom = 260;
-
-	private static int default_x_attaquant2_dom = 360;
-	private static int default_y_attaquant2_dom = 350;
-
-	private static int default_x_gardien_ext = 790;
-	private static int default_y_gardien_ext = 305;
-
-	private static int default_x_defenseur1_ext = 690;
-	private static int default_y_defenseur1_ext = 100;
-
-	private static int default_x_defenseur2_ext = 690;
-	private static int default_y_defenseur2_ext = 265;
-
-	private static int default_x_defenseur3_ext = 690;
-	private static int default_y_defenseur3_ext = 350;
-
-	private static int default_x_defenseur4_ext = 690;
-	private static int default_y_defenseur4_ext = 500;
-
-	private static int default_x_milieu1_ext = 620;
-	private static int default_y_milieu1_ext = 100;
-
-	private static int default_x_milieu2_ext = 620;
-	private static int default_y_milieu2_ext = 265;
-
-	private static int default_x_milieu3_ext = 620;
-	private static int default_y_milieu3_ext = 350;
-
-	private static int default_x_milieu4_ext = 620;
-	private static int default_y_milieu4_ext = 500;
-
-	private static int default_x_attaquant1_ext = 530;
-	private static int default_y_attaquant1_ext = 265;
-
-	private static int default_x_attaquant2_ext = 530;
-	private static int default_y_attaquant2_ext = 350;
+	private String dashboardNameTeam ;
+	
+	private int scoreTeam = 0 ;
 	
 	public ArrayList<Player> squad = new ArrayList<Player>();
 	
 
 	public String getNameTeam() {
-
 		return nameTeam;
 	}
 
@@ -84,121 +21,216 @@ public class Team {
 		this.nameTeam = nameTeam;
 	}
 
-	public ArrayList<Player> getPlayers() {
+	public String getDashboardNameTeam() {
+		return dashboardNameTeam;
+	}
+
+	public void setDashboardNameTeam(String dashboardNameTeam) {
+		this.dashboardNameTeam = dashboardNameTeam;
+	}
+
+	public int getScoreTeam() {
+		return scoreTeam;
+	}
+
+	public void setScoreTeam(int scoreTeam) {
+		this.scoreTeam = scoreTeam;
+	}
+
+	public ArrayList<Player> getSquad() {
 		return squad;
 	}
 
-	public void setPlayers(ArrayList<Player> players) {
-		this.squad = players;
+	public void setSquad(ArrayList<Player> squad) {
+		this.squad = squad;
 	}
 
 
 	@Override
 	public String toString() {
-		return "Team [nameTeam=" + nameTeam + ", squad=" + squad + "]";
+		return "Team [nameTeam=" + nameTeam + ", dashboardNameTeam=" + dashboardNameTeam + ", scoreTeam=" + scoreTeam
+				+ ", squad=" + squad + "]";
 	}
 
-	public Team(String nameTeam, ArrayList<Player> players) {
+	public Team(String nameTeam, String dashboardNameTeam, int scoreTeam) {
 		super();
 		this.nameTeam = nameTeam;
-		this.squad = players;
-		createteams();
-
+		this.dashboardNameTeam = dashboardNameTeam;
+		this.scoreTeam = scoreTeam;
 	}
 
-	public static ArrayList<Player> squad_dom = new ArrayList<>();
-	public static ArrayList<Player> squad_ext = new ArrayList<>();
-
-	private static Player.position GOAL = Enum.valueOf(Player.position.class, "GOALKEEPER");
-
-	private static Player.position DEF = Enum.valueOf(Player.position.class, "DEFENDER");
-
-	private static Player.position MID = Enum.valueOf(Player.position.class, "MIDFIELDER");
-
-	private static Player.position ATT = Enum.valueOf(Player.position.class, "FORWARD");
-
-	public static void createteams() {
+	public void createSquad(String side) {
+	
+		// Position par défaut Equipe Domicile
 		
-		Player p1 = new Player("1",20, 30, 40, 80, 90, 1, GOAL, default_x_gardien_dom, default_y_gardien_dom,false);
-		Player p2 = new Player("2",30, 50, 40, 70, 60, 2, DEF, default_x_defenseur1_dom, default_y_defenseur1_dom,true);
-		Player p3 = new Player("3",20, 40, 40, 70, 60, 3, DEF, default_x_defenseur2_dom, default_y_defenseur2_dom,false);
-		Player p4 = new Player("4",30, 30, 40, 70, 70, 4, DEF, default_x_defenseur3_dom, default_y_defenseur3_dom,false);
-		Player p5 = new Player("5",30, 40, 40, 70, 60, 5, DEF, default_x_defenseur4_dom, default_y_defenseur4_dom,false);
-
-		Player p6 = new Player("6",60, 40, 60, 20, 70, 7, MID, default_x_milieu1_dom, default_y_milieu1_dom,false);
-		Player p7 = new Player("7",60, 50, 70, 30, 60, 8, MID, default_x_milieu2_dom, default_y_milieu2_dom,false);
-		Player p8 = new Player("8",50, 30, 50, 40, 80, 9, MID, default_x_milieu3_dom, default_y_milieu3_dom,false);
-		Player p9 = new Player("9",60, 40, 60, 20, 70, 7, MID, default_x_milieu4_dom, default_y_milieu4_dom,false);
-
-		Player p10 = new Player("10",80, 80, 50, 40, 80, 10, ATT, default_x_attaquant1_dom, default_y_attaquant1_dom,false);
-		Player p11 = new Player("11",100, 90, 100, 50, 100, 11, ATT, default_x_attaquant2_dom, default_y_attaquant2_dom,false);
-
-		squad_dom.add(p1);
-
-		squad_dom.add(p2);
-		squad_dom.add(p3);
-		squad_dom.add(p4);
-		squad_dom.add(p5);
-
-		squad_dom.add(p6);
-		squad_dom.add(p7);
-		squad_dom.add(p8);
+		int default_x_goalkeeper_dom = 100;
+		int default_y_goalkeeper_dom = 305;
 		
-		squad_dom.add(p9);
-		squad_dom.add(p10);
-		squad_dom.add(p11);
+		int default_x_defender1_dom = 200;
+		int default_y_defender1_dom= 100;
 
-		Player p21 = new Player("12",40, 50, 30, 40, 60, 11, DEF, default_x_defenseur1_ext, default_y_defenseur1_ext,false);
-		Player p22 = new Player("13",30, 45, 40, 30, 65, 10, DEF, default_x_defenseur2_ext, default_y_defenseur2_ext,false);
-		Player p23 = new Player("14",35, 40, 50, 45, 70, 9, DEF, default_x_defenseur3_ext, default_y_defenseur3_ext,false);
-		Player p24 = new Player("15",45, 40, 45, 35, 70, 8, DEF, default_x_defenseur4_ext, default_y_defenseur4_ext,false);
+		int default_x_defender2_dom = 200;
+		int default_y_defender2_dom = 245;
 
-		Player p25 = new Player("16",60, 30, 60, 80, 0, 7, MID, default_x_milieu1_ext, default_y_milieu1_ext,false);
-		Player p26 = new Player("17",65, 40, 50, 85, 0, 6, MID, default_x_milieu2_ext, default_y_milieu2_ext,false);
-		Player p27 = new Player("18",70, 45, 65, 90, 0, 5, MID, default_x_milieu3_ext, default_y_milieu3_ext,false);
+		int default_x_defender3_dom = 200;
+		int default_y_defender3_dom = 370;
+
+		int default_x_defender4_dom = 200;
+		int default_y_defender4_dom = 500;
+
+		int default_x_midfielder1_dom = 275;
+		int default_y_midfielder1_dom = 300;
+
+		int default_x_midfielder2_dom = 330;
+		int default_y_midfielder2_dom = 220;
 		
-		Player p28 = new Player("19",75, 50, 55, 70, 0, 4, MID, default_x_milieu4_ext, default_y_milieu4_ext,false);
-		Player p29 = new Player("20",90, 85, 85, 55, 90, 3, ATT, default_x_attaquant1_ext, default_y_attaquant1_ext,false);
-		Player p210 = new Player("21",95, 90, 80, 50, 100, 2, ATT, default_x_attaquant2_ext, default_y_attaquant2_ext,false);
+		int default_x_midfielder3_dom = 330;
+		int default_y_midfielder3_dom = 380;
 
-		Player p211 = new Player("22",50, 60, 30, 90, 90, 1, GOAL, default_x_gardien_ext, default_y_gardien_ext,false);
+		int default_x_forward1_dom = 400;
+		int default_y_forward1_dom = 306;
 
-		squad_ext.add(p211);
-		squad_ext.add(p210);
-		squad_ext.add(p29);
-		squad_ext.add(p28);
-		squad_ext.add(p27);
-		squad_ext.add(p26);
-		squad_ext.add(p25);
-		squad_ext.add(p24);
-		squad_ext.add(p23);
-		squad_ext.add(p22);
-		squad_ext.add(p21);
+		int default_x_forward2_dom = 380;
+		int default_y_forward2_dom = 150;
+		
+		int default_x_forward3_dom = 380;
+		int default_y_forward3_dom = 450;
+		
+		
+		// Position par défaut Equipe Extérieure
+		
+		int default_x_goalkeeper_ext = 790;
+		int default_y_goalkeeper_ext = 305;
+
+		int default_x_defender1_ext = 690;
+		int default_y_defender1_ext = 100;
+
+		int default_x_defender2_ext = 690;
+		int default_y_defender2_ext = 245;
+
+		int default_x_defender3_ext = 690;
+		int default_y_defender3_ext = 370;
+
+		int default_x_defender4_ext = 690;
+		int default_y_defender4_ext = 500;
+		
+		int default_x_midfielder1_ext = 600;
+		int default_y_midfielder1_ext = 300;
+
+		int default_x_midfielder2_ext = 550;
+		int default_y_midfielder2_ext = 220;
+
+		int default_x_midfielder3_ext = 550;
+		int default_y_midfielder3_ext = 380;
+		
+		int default_x_forward1_ext = 480;
+		int default_y_forward1_ext = 306;
+
+		int default_x_forward2_ext = 500;
+		int default_y_forward2_ext = 150;
+		
+		int default_x_forward3_ext = 500;
+		int default_y_forward3_ext = 450;
+
+		Player.position GOAL = Enum.valueOf(Player.position.class, "GOALKEEPER");
+
+		Player.position DEF = Enum.valueOf(Player.position.class, "DEFENDER");
+
+		Player.position MID = Enum.valueOf(Player.position.class, "MIDFIELDER");
+
+		Player.position FOR = Enum.valueOf(Player.position.class, "FORWARD");
+		
+		
+		Player goalkeeper_dom = new Player("1",20, 30, 40, 80, 90, 1, GOAL, default_x_goalkeeper_dom, default_y_goalkeeper_dom,false);
+		
+		Player defender1_dom = new Player("2",30, 50, 40, 70, 60, 2, DEF, default_x_defender1_dom, default_y_defender1_dom,false);
+		Player defender2_dom = new Player("3",20, 40, 40, 70, 60, 3, DEF, default_x_defender2_dom, default_y_defender2_dom,false);
+		Player defender3_dom = new Player("4",30, 30, 40, 70, 70, 4, DEF, default_x_defender3_dom, default_y_defender3_dom,false);
+		Player defender4_dom = new Player("5",30, 40, 40, 70, 60, 5, DEF, default_x_defender4_dom, default_y_defender4_dom,false);
+
+		Player midfielder1_dom = new Player("6",60, 40, 60, 20, 70, 7, MID, default_x_midfielder1_dom, default_y_midfielder1_dom,false);
+		Player midfielder2_dom = new Player("7",60, 50, 70, 30, 60, 8, MID, default_x_midfielder2_dom, default_y_midfielder2_dom,false);
+		Player midfielder3_dom = new Player("8",50, 30, 50, 40, 80, 9, MID, default_x_midfielder3_dom, default_y_midfielder3_dom,false);
+
+		Player forward1_dom = new Player("9",80, 80, 50, 40, 80, 10, FOR, default_x_forward1_dom, default_y_forward1_dom,false);
+		Player forward2_dom = new Player("10",100, 90, 100, 50, 100, 11, FOR, default_x_forward2_dom, default_y_forward2_dom,false);
+		Player forward3_dom = new Player("11",60, 40, 60, 20, 70, 7, FOR, default_x_forward3_dom, default_y_forward3_dom,false);
+		
+		
+		Player goalkeeper_ext = new Player("1",20, 30, 40, 80, 90, 1, GOAL, default_x_goalkeeper_ext, default_y_goalkeeper_ext,false);
+		
+		Player defender1_ext = new Player("2",30, 50, 40, 70, 60, 2, DEF, default_x_defender1_ext, default_y_defender1_ext,false);
+		Player defender2_ext = new Player("3",20, 40, 40, 70, 60, 3, DEF, default_x_defender2_ext, default_y_defender2_ext,false);
+		Player defender3_ext = new Player("4",30, 30, 40, 70, 70, 4, DEF, default_x_defender3_ext, default_y_defender3_ext,false);
+		Player defender4_ext = new Player("5",30, 40, 40, 70, 60, 5, DEF, default_x_defender4_ext, default_y_defender4_ext,false);
+
+		Player midfielder1_ext = new Player("6",60, 40, 60, 20, 70, 7, MID, default_x_midfielder1_ext, default_y_midfielder1_ext,false);
+		Player midfielder2_ext = new Player("7",60, 50, 70, 30, 60, 8, MID, default_x_midfielder2_ext, default_y_midfielder2_ext,false);
+		Player midfielder3_ext = new Player("8",50, 30, 50, 40, 80, 9, MID, default_x_midfielder3_ext, default_y_midfielder3_ext,false);
+
+		Player forward1_ext = new Player("9",80, 80, 50, 40, 80, 10, FOR, default_x_forward1_ext, default_y_forward1_ext,false);
+		Player forward2_ext = new Player("10",100, 90, 100, 50, 100, 11, FOR, default_x_forward2_ext, default_y_forward2_ext,false);
+		Player forward3_ext = new Player("11",60, 40, 60, 20, 70, 7, FOR, default_x_forward3_ext, default_y_forward3_ext,false);
+
+		if (side == "dom") {
+			
+			squad.add(goalkeeper_dom);
+
+			squad.add(defender1_dom);
+			squad.add(defender2_dom);
+			squad.add(defender3_dom);
+			squad.add(defender4_dom);
+
+			squad.add(midfielder1_dom);
+			squad.add(midfielder2_dom);
+			squad.add(midfielder3_dom);
+			
+			squad.add(forward1_dom);
+			squad.add(forward2_dom);
+			squad.add(forward3_dom);
+			
+		} else if (side == "ext") {
+			
+			squad.add(goalkeeper_ext);
+
+			squad.add(defender1_ext);
+			squad.add(defender2_ext);
+			squad.add(defender3_ext);
+			squad.add(defender4_ext);
+
+			squad.add(midfielder1_ext);
+			squad.add(midfielder2_ext);
+			squad.add(midfielder3_ext);
+			
+			squad.add(forward1_ext);
+			squad.add(forward2_ext);
+			squad.add(forward3_ext);
+			
+		} else {
+			// ajouter la gestion de l'erreur
+		}
+		
 		
 	//Team.parcoursListPlayer(squad_dom);
 	//Team.parcoursListPlayer(squad_ext);
 
 	}
 
-	public Player searchByNameSquadDom(String name) { 
-    	for(int i = 0; i < squad_dom.size(); i++) { 
-    		if(squad_dom.get(i).getName().equals(name)) {
-    			return squad_dom.get(i);
+	public Player searchPlayerByNameInSquad(ArrayList <Player> squad, String name) { 
+    	for(int i = 0; i < squad.size(); i++) { 
+    		if(squad.get(i).getName().equals(name)) {
+    			return squad.get(i);
     		}
     	}
     	return null;
 	}
 	
 	
-	public static void parcoursListPlayer(ArrayList<Player> list) {
-
-		for (Player p : list) {
-
+	public static void parcoursListPlayer(ArrayList<Player> squad) {
+		for (Player p : squad) {
 			p.toString();
 			System.out.println(p);
-
 		}
-
 	}
 
 }
