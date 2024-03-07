@@ -10,8 +10,8 @@ public class Player {
 	private int shoot;
 	private int number;
 
-	private int x;
-	private int y;
+	private double x;
+	private double y;
 	private boolean is_have_ball ;
 
 	enum position {
@@ -21,7 +21,7 @@ public class Player {
 	private position player_position;
 
 	public Player(String name, int speed, int pass, int dribbles, int defense, int shoot, int number, position player_position,
-			int x, int y, boolean ball) {
+			double x, double y, boolean ball) {
 
 		this.speed = speed;
 		this.pass = pass;
@@ -108,19 +108,19 @@ public class Player {
 		player_position = new_player_position ;
 	}
 	
-	public int getX() {
+	public double getX() {
 		return x;
 	}
 
-	public void setX(int x) {
+	public void setX(double x) {
 		this.x = x;
 	}
 	
-	public int getY() {
+	public double getY() {
 		return y;
 	}
 
-	public void setY(int y) {
+	public void setY(double y) {
 		this.y = y;
 	}
 

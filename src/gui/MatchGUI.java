@@ -33,7 +33,7 @@ public class MatchGUI extends JFrame implements Runnable {
 	/**
 	 * The normal speed is 1000, e.q. one refresh per second (1000 milliseconds).
 	 */
-	private static final int CHRONO_SPEED = 500;
+	private static final int CHRONO_SPEED = 100;
 
 	public Chronometer getChronometer() {
 		return chronometer;
@@ -70,8 +70,8 @@ public class MatchGUI extends JFrame implements Runnable {
 
 	private JPanel control = new JPanel();
 	
-	private Match match = new Match(dashboard.getTeam_dom(), dashboard.getTeam_ext(), 90, dashboard.getBall());
-
+	
+	
 	/**
 	 * This instance is used in the inner classes for different action listeners.
 	 */
@@ -92,7 +92,7 @@ public class MatchGUI extends JFrame implements Runnable {
 		dashboard.getTeam_dom().createSquad("dom");
 		dashboard.getTeam_ext().createSquad("ext");
 		
-		match.firstEngagement();
+		dashboard.getMatch().firstEngagement();
 
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
@@ -179,8 +179,22 @@ public class MatchGUI extends JFrame implements Runnable {
 		
 		// Test mouvement
 		
-		//dashboard.getTeam_dom().getSquad().get(0).setX(dashboard.getTeam_dom().getSquad().get(0).getX()+ 10);
+		// dashboard.getTeam_dom().getSquad().get(0).setX(dashboard.getTeam_dom().getSquad().get(0).getX()+ 10);
 				
+		Match match_ongoing = dashboard.getMatch();
+		
+		if (match_ongoing.getIsProcessOngoing() && (match_ongoing.getProcessType() == Match.process_type.PASS)) {
+			match_ongoing.passProcessing();
+			
+		} else {
+			
+			if (dashboard.getTeam_dom().isTeamHaveBall()) {
+				match_ongoing.initPassProcess(dashboard.getTeam_dom(), dashboard.getTeam_ext());
+			} else {
+				match_ongoing.initPassProcess(dashboard.getTeam_ext(), dashboard.getTeam_dom());
+			}
+		
+		}
 
 		// The dashboard needs to be reprinted when hour, minute or second values change.*/
 		
@@ -203,7 +217,7 @@ public class MatchGUI extends JFrame implements Runnable {
 			// Ensure that the chronometer is not stopped during the iteration.
 			if (!stop) {
 				updateValues();
-				//ChangePlayers(chronometer);
+				// ChangePlayers(chronometer);
 			}
 		}
 	}
