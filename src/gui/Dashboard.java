@@ -11,6 +11,7 @@ import data.Ball;
 import data.Team;
 import delimitations.Sortie;
 import delimitations.Surface;
+import process.Match;
 
 /**
  * This class manages the dashboard (minute, second) of chronometer GUI.
@@ -28,7 +29,8 @@ public class Dashboard extends JPanel {
 	private Team team_ext = new Team("Equipe Extérieure", "EXT", 0);
 	
 	private Ball ball = new Ball(440,306) ;
-
+	
+	private Match match = new Match(team_dom, team_ext, 90, ball) ;
 	
 	public Dashboard() {
 		super();
@@ -70,8 +72,15 @@ public class Dashboard extends JPanel {
 	public void setBall(Ball ball) {
 		this.ball = ball;
 	}
-	
-	
+
+	public Match getMatch() {
+		return match;
+	}
+
+	public void setMatch(Match match) {
+		this.match = match;
+	}
+
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);

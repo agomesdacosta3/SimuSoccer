@@ -225,6 +225,14 @@ public class Team {
     	return null;
 	}
 	
+	public Boolean isTeamHaveBall() { 
+    	for(int i = 0; i < squad.size(); i++) { 
+    		if(squad.get(i).isBall()) {
+    			 return true;
+    		}
+    	}
+    	return false ;
+	}
 	
 	public static void parcoursListPlayer(ArrayList<Player> squad) {
 		for (Player p : squad) {
