@@ -2,29 +2,29 @@ package data;
 
 public class Ball {
 	
-	private int positionx_Ball = 450 ;
-	private int positiony_Ball = 450 ;
+	private double positionx_Ball = 450 ;
+	private double positiony_Ball = 450 ;
 
 
-	public int getPositionx_Ball() {
+	public double getPositionx_Ball() {
 		return positionx_Ball;
 	}
 
-	public Ball(int positionx_Ball, int positiony_Ball) {
+	public Ball(double positionx_Ball, double positiony_Ball) {
 		super();
 		this.positionx_Ball = positionx_Ball;
 		this.positiony_Ball = positiony_Ball;
 	}
 
-	public void setPositionx_Ball(int positionx_Ball) {
+	public void setPositionx_Ball(double positionx_Ball) {
 		this.positionx_Ball = positionx_Ball;
 	}
 
-	public int getPositiony_Ball() {
+	public double getPositiony_Ball() {
 		return positiony_Ball;
 	}
 
-	public void setPositiony_Ball(int positiony_Ball) {
+	public void setPositiony_Ball(double positiony_Ball) {
 		this.positiony_Ball = positiony_Ball;
 	}
 }

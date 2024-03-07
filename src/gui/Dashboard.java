@@ -91,8 +91,8 @@ public class Dashboard extends JPanel {
 
 		g.setColor(Color.BLACK);
 		
-		g.drawOval(ball.getPositionx_Ball(), ball.getPositiony_Ball(), 10, 10);
-		g.fillOval(ball.getPositionx_Ball(), ball.getPositiony_Ball(), 10, 10);
+		g.drawOval(convertDoubleIntoInt(ball.getPositionx_Ball()), convertDoubleIntoInt(ball.getPositiony_Ball()), 10, 10);
+		g.fillOval(convertDoubleIntoInt(ball.getPositionx_Ball()), convertDoubleIntoInt(ball.getPositiony_Ball()), 10, 10);
 		
 		g.setColor(Color.PINK);
 		
@@ -121,77 +121,85 @@ public class Dashboard extends JPanel {
 
 		// Gardien
 
-        g.drawRect(team_dom.getSquad().get(0).getX(), team_dom.getSquad().get(0).getY(), 10, 10);
-        g.fillRect(team_dom.getSquad().get(0).getX(), team_dom.getSquad().get(0).getY(), 10, 10);
+        g.drawRect(convertDoubleIntoInt(team_dom.getSquad().get(0).getX()), convertDoubleIntoInt(team_dom.getSquad().get(0).getY()), 10, 10);
+        g.fillRect(convertDoubleIntoInt(team_dom.getSquad().get(0).getX()), convertDoubleIntoInt(team_dom.getSquad().get(0).getY()), 10, 10);
 		
         // Défenseur
         
-        g.drawRect(team_dom.getSquad().get(1).getX(), team_dom.getSquad().get(1).getY(), 10, 10);
-        g.drawRect(team_dom.getSquad().get(2).getX(), team_dom.getSquad().get(2).getY(), 10, 10);
-        g.drawRect(team_dom.getSquad().get(3).getX(), team_dom.getSquad().get(3).getY(), 10, 10);
-        g.drawRect(team_dom.getSquad().get(4).getX(), team_dom.getSquad().get(4).getY(), 10, 10);
-        g.fillRect(team_dom.getSquad().get(1).getX(), team_dom.getSquad().get(1).getY(), 10, 10);
-        g.fillRect(team_dom.getSquad().get(2).getX(), team_dom.getSquad().get(2).getY(), 10, 10);
-        g.fillRect(team_dom.getSquad().get(3).getX(), team_dom.getSquad().get(3).getY(), 10, 10);
-        g.fillRect(team_dom.getSquad().get(4).getX(), team_dom.getSquad().get(4).getY(), 10, 10);
+        g.drawRect(convertDoubleIntoInt(team_dom.getSquad().get(1).getX()), convertDoubleIntoInt(team_dom.getSquad().get(1).getY()), 10, 10);
+        g.drawRect(convertDoubleIntoInt(team_dom.getSquad().get(2).getX()), convertDoubleIntoInt(team_dom.getSquad().get(2).getY()), 10, 10);
+        g.drawRect(convertDoubleIntoInt(team_dom.getSquad().get(3).getX()), convertDoubleIntoInt(team_dom.getSquad().get(3).getY()), 10, 10);
+        g.drawRect(convertDoubleIntoInt(team_dom.getSquad().get(4).getX()), convertDoubleIntoInt(team_dom.getSquad().get(4).getY()), 10, 10);
+        g.fillRect(convertDoubleIntoInt(team_dom.getSquad().get(1).getX()), convertDoubleIntoInt(team_dom.getSquad().get(1).getY()), 10, 10);
+        g.fillRect(convertDoubleIntoInt(team_dom.getSquad().get(2).getX()), convertDoubleIntoInt(team_dom.getSquad().get(2).getY()), 10, 10);
+        g.fillRect(convertDoubleIntoInt(team_dom.getSquad().get(3).getX()), convertDoubleIntoInt(team_dom.getSquad().get(3).getY()), 10, 10);
+        g.fillRect(convertDoubleIntoInt(team_dom.getSquad().get(4).getX()), convertDoubleIntoInt(team_dom.getSquad().get(4).getY()), 10, 10);
+        
 
         // Milieu
         
-        g.drawRect(team_dom.getSquad().get(5).getX(), team_dom.getSquad().get(5).getY(), 10, 10);
-        g.drawRect(team_dom.getSquad().get(6).getX(), team_dom.getSquad().get(6).getY(), 10, 10);
-        g.drawRect(team_dom.getSquad().get(7).getX(), team_dom.getSquad().get(7).getY(), 10, 10);
-        g.fillRect(team_dom.getSquad().get(5).getX(), team_dom.getSquad().get(5).getY(), 10, 10);
-        g.fillRect(team_dom.getSquad().get(6).getX(), team_dom.getSquad().get(6).getY(), 10, 10);
-        g.fillRect(team_dom.getSquad().get(7).getX(), team_dom.getSquad().get(7).getY(), 10, 10);
+        g.drawRect(convertDoubleIntoInt(team_dom.getSquad().get(5).getX()), convertDoubleIntoInt(team_dom.getSquad().get(5).getY()), 10, 10);
+        g.drawRect(convertDoubleIntoInt(team_dom.getSquad().get(6).getX()), convertDoubleIntoInt(team_dom.getSquad().get(6).getY()), 10, 10);
+        g.drawRect(convertDoubleIntoInt(team_dom.getSquad().get(7).getX()), convertDoubleIntoInt(team_dom.getSquad().get(7).getY()), 10, 10);
+        g.fillRect(convertDoubleIntoInt(team_dom.getSquad().get(5).getX()), convertDoubleIntoInt(team_dom.getSquad().get(5).getY()), 10, 10);
+        g.fillRect(convertDoubleIntoInt(team_dom.getSquad().get(6).getX()), convertDoubleIntoInt(team_dom.getSquad().get(6).getY()), 10, 10);
+        g.fillRect(convertDoubleIntoInt(team_dom.getSquad().get(7).getX()), convertDoubleIntoInt(team_dom.getSquad().get(7).getY()), 10, 10);
       
        // Attaquant
         
-        g.drawRect(team_dom.getSquad().get(8).getX(), team_dom.getSquad().get(8).getY(), 10, 10);
-        g.drawRect(team_dom.getSquad().get(9).getX(), team_dom.getSquad().get(9).getY(), 10, 10);
-        g.drawRect(team_dom.getSquad().get(10).getX(), team_dom.getSquad().get(10).getY(), 10, 10);
-        g.fillRect(team_dom.getSquad().get(8).getX(), team_dom.getSquad().get(8).getY(), 10, 10);
-        g.fillRect(team_dom.getSquad().get(9).getX(), team_dom.getSquad().get(9).getY(), 10, 10);
-        g.fillRect(team_dom.getSquad().get(10).getX(), team_dom.getSquad().get(10).getY(), 10, 10);
+        g.fillRect(convertDoubleIntoInt(team_dom.getSquad().get(8).getX()),convertDoubleIntoInt( team_dom.getSquad().get(8).getY()), 10, 10);
+        g.fillRect(convertDoubleIntoInt(team_dom.getSquad().get(9).getX()),convertDoubleIntoInt( team_dom.getSquad().get(9).getY()), 10, 10);
+        g.fillRect(convertDoubleIntoInt(team_dom.getSquad().get(10).getX()),convertDoubleIntoInt( team_dom.getSquad().get(10).getY()), 10, 10);
+        g.fillRect(convertDoubleIntoInt(team_dom.getSquad().get(8).getX()),convertDoubleIntoInt( team_dom.getSquad().get(8).getY()), 10, 10);
+        g.fillRect(convertDoubleIntoInt(team_dom.getSquad().get(9).getX()),convertDoubleIntoInt( team_dom.getSquad().get(9).getY()), 10, 10);
+        g.fillRect(convertDoubleIntoInt(team_dom.getSquad().get(10).getX()),convertDoubleIntoInt( team_dom.getSquad().get(10).getY()), 10, 10);
+        
+        
         
 
         // Equipe extérieure
         
         g.setColor(Color.RED);
         
-        // Gardien
+     // Gardien
 
-        g.drawRect(team_ext.getSquad().get(0).getX(), team_ext.getSquad().get(0).getY(), 10, 10);
-        g.fillRect(team_ext.getSquad().get(0).getX(), team_ext.getSquad().get(0).getY(), 10, 10);
+        g.drawRect(convertDoubleIntoInt(team_ext.getSquad().get(0).getX()), convertDoubleIntoInt(team_ext.getSquad().get(0).getY()), 10, 10);
+        g.fillRect(convertDoubleIntoInt(team_ext.getSquad().get(0).getX()), convertDoubleIntoInt(team_ext.getSquad().get(0).getY()), 10, 10);
 		
         // Défenseur
         
-        g.drawRect(team_ext.getSquad().get(1).getX(), team_ext.getSquad().get(1).getY(), 10, 10);
-        g.drawRect(team_ext.getSquad().get(2).getX(), team_ext.getSquad().get(2).getY(), 10, 10);
-        g.drawRect(team_ext.getSquad().get(3).getX(), team_ext.getSquad().get(3).getY(), 10, 10);
-        g.drawRect(team_ext.getSquad().get(4).getX(), team_ext.getSquad().get(4).getY(), 10, 10);
-        g.fillRect(team_ext.getSquad().get(1).getX(), team_ext.getSquad().get(1).getY(), 10, 10);
-        g.fillRect(team_ext.getSquad().get(2).getX(), team_ext.getSquad().get(2).getY(), 10, 10);
-        g.fillRect(team_ext.getSquad().get(3).getX(), team_ext.getSquad().get(3).getY(), 10, 10);
-        g.fillRect(team_ext.getSquad().get(4).getX(), team_ext.getSquad().get(4).getY(), 10, 10);
+        g.drawRect(convertDoubleIntoInt(team_ext.getSquad().get(1).getX()), convertDoubleIntoInt(team_ext.getSquad().get(1).getY()), 10, 10);
+        g.drawRect(convertDoubleIntoInt(team_ext.getSquad().get(2).getX()), convertDoubleIntoInt(team_ext.getSquad().get(2).getY()), 10, 10);
+        g.drawRect(convertDoubleIntoInt(team_ext.getSquad().get(3).getX()), convertDoubleIntoInt(team_ext.getSquad().get(3).getY()), 10, 10);
+        g.drawRect(convertDoubleIntoInt(team_ext.getSquad().get(4).getX()), convertDoubleIntoInt(team_ext.getSquad().get(4).getY()), 10, 10);
+        g.fillRect(convertDoubleIntoInt(team_ext.getSquad().get(1).getX()), convertDoubleIntoInt(team_ext.getSquad().get(1).getY()), 10, 10);
+        g.fillRect(convertDoubleIntoInt(team_ext.getSquad().get(2).getX()), convertDoubleIntoInt(team_ext.getSquad().get(2).getY()), 10, 10);
+        g.fillRect(convertDoubleIntoInt(team_ext.getSquad().get(3).getX()), convertDoubleIntoInt(team_ext.getSquad().get(3).getY()), 10, 10);
+        g.fillRect(convertDoubleIntoInt(team_ext.getSquad().get(4).getX()), convertDoubleIntoInt(team_ext.getSquad().get(4).getY()), 10, 10);
+        
 
         // Milieu
         
-        g.drawRect(team_ext.getSquad().get(5).getX(), team_ext.getSquad().get(5).getY(), 10, 10);
-        g.drawRect(team_ext.getSquad().get(6).getX(), team_ext.getSquad().get(6).getY(), 10, 10);
-        g.drawRect(team_ext.getSquad().get(7).getX(), team_ext.getSquad().get(7).getY(), 10, 10);
-        g.fillRect(team_ext.getSquad().get(5).getX(), team_ext.getSquad().get(5).getY(), 10, 10);
-        g.fillRect(team_ext.getSquad().get(6).getX(), team_ext.getSquad().get(6).getY(), 10, 10);
-        g.fillRect(team_ext.getSquad().get(7).getX(), team_ext.getSquad().get(7).getY(), 10, 10);
+        g.drawRect(convertDoubleIntoInt(team_ext.getSquad().get(5).getX()), convertDoubleIntoInt(team_ext.getSquad().get(5).getY()), 10, 10);
+        g.drawRect(convertDoubleIntoInt(team_ext.getSquad().get(6).getX()), convertDoubleIntoInt(team_ext.getSquad().get(6).getY()), 10, 10);
+        g.drawRect(convertDoubleIntoInt(team_ext.getSquad().get(7).getX()), convertDoubleIntoInt(team_ext.getSquad().get(7).getY()), 10, 10);
+        g.fillRect(convertDoubleIntoInt(team_ext.getSquad().get(5).getX()), convertDoubleIntoInt(team_ext.getSquad().get(5).getY()), 10, 10);
+        g.fillRect(convertDoubleIntoInt(team_ext.getSquad().get(6).getX()), convertDoubleIntoInt(team_ext.getSquad().get(6).getY()), 10, 10);
+        g.fillRect(convertDoubleIntoInt(team_ext.getSquad().get(7).getX()), convertDoubleIntoInt(team_ext.getSquad().get(7).getY()), 10, 10);
       
        // Attaquant
         
-        g.drawRect(team_ext.getSquad().get(8).getX(), team_ext.getSquad().get(8).getY(), 10, 10);
-        g.drawRect(team_ext.getSquad().get(9).getX(), team_ext.getSquad().get(9).getY(), 10, 10);
-        g.drawRect(team_ext.getSquad().get(10).getX(), team_ext.getSquad().get(10).getY(), 10, 10);
-        g.fillRect(team_ext.getSquad().get(8).getX(), team_ext.getSquad().get(8).getY(), 10, 10);
-        g.fillRect(team_ext.getSquad().get(9).getX(), team_ext.getSquad().get(9).getY(), 10, 10);
-        g.fillRect(team_ext.getSquad().get(10).getX(), team_ext.getSquad().get(10).getY(), 10, 10);
-        
+        g.fillRect(convertDoubleIntoInt(team_ext.getSquad().get(8).getX()),convertDoubleIntoInt( team_ext.getSquad().get(8).getY()), 10, 10);
+        g.fillRect(convertDoubleIntoInt(team_ext.getSquad().get(9).getX()),convertDoubleIntoInt( team_ext.getSquad().get(9).getY()), 10, 10);
+        g.fillRect(convertDoubleIntoInt(team_ext.getSquad().get(10).getX()),convertDoubleIntoInt( team_ext.getSquad().get(10).getY()), 10, 10);
+        g.fillRect(convertDoubleIntoInt(team_ext.getSquad().get(8).getX()),convertDoubleIntoInt( team_ext.getSquad().get(8).getY()), 10, 10);
+        g.fillRect(convertDoubleIntoInt(team_ext.getSquad().get(9).getX()),convertDoubleIntoInt( team_ext.getSquad().get(9).getY()), 10, 10);
+        g.fillRect(convertDoubleIntoInt(team_ext.getSquad().get(10).getX()),convertDoubleIntoInt( team_ext.getSquad().get(10).getY()), 10, 10);
+   
 	}
+	
+	public int convertDoubleIntoInt(double double_numnber) {
+        return (int) double_numnber;
+    }
 
 }

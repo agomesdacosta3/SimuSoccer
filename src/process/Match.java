@@ -140,13 +140,15 @@ public class Match {
 	
 	public void passProcessing () {
 
-		int receiver_x_position = pass_players.get(1).getX();
-		int receiver_y_position = pass_players.get(1).getY();
+		double receiver_x_position = pass_players.get(1).getX();
+		double receiver_y_position = pass_players.get(1).getY();
 		
-		int ball_x_position = ball.getPositionx_Ball();
-		int ball_y_position = ball.getPositiony_Ball();
+		double ball_x_position = ball.getPositionx_Ball();
+		double ball_y_position = ball.getPositiony_Ball();
 		
-		if ( (Math.abs(ball_x_position - receiver_x_position) < 10) && (Math.abs(ball_y_position - receiver_y_position) < 10) ) {
+		int tolerance = 10 ;
+		
+		if ( (Math.abs(ball_x_position - receiver_x_position) < tolerance) && (Math.abs(ball_y_position - receiver_y_position) < tolerance) ) {
 			
 			pass_players.get(0).setBall(false);
 			pass_players.get(1).setBall(true);
@@ -158,6 +160,20 @@ public class Match {
 			
 		} else {
 			
+			// Calcul de la distance entre la balle et le receveur
+		    double distance = Math.sqrt(Math.pow(receiver_x_position - ball_x_position, 2) + Math.pow(receiver_y_position - ball_y_position, 2));
+
+		    // Calcul du ratio pour déterminer le déplacement en x et y de la balle
+		    double ratio = 10 / distance;
+
+		    // Calcul du déplacement en x et y en fonction du ratio
+		    double deltaX = ratio * (receiver_x_position - ball_x_position);
+		    double deltaY = ratio * (receiver_y_position - ball_y_position);
+
+		    // Mettre à jour les positions de la balle
+		    ball.setPositionx_Ball(ball_x_position + deltaX);
+		    ball.setPositiony_Ball(ball_y_position + deltaY);
+			/*
 			if (ball_x_position > receiver_x_position ) {
 				ball.setPositionx_Ball(ball.getPositionx_Ball() - 10);
 			} else {
@@ -170,7 +186,7 @@ public class Match {
 			} else {
 				ball.setPositiony_Ball(ball.getPositiony_Ball() + 10);
 			}
-			
+			*/
 			
 		}
 		
