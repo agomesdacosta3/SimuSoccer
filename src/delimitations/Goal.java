@@ -2,17 +2,32 @@ package delimitations;
 
 public class Goal {
 	
-	protected static final int Goal_Haut_Gauche_x = 75 ;
-	protected static final int Goal_Haut_Gauche_y = 50 ;
-	
-	protected static final int Goal_Bas_Gauche_x = 75 ;
-	protected static final int Goal_Bas_Gauche_y = 50 ;
+	protected static final int Goal_Gauche_x = 75 ;
+	protected static final int Goal_Gauche_Haut_y = 245 ;
+	protected static final int Goal_Gauche_Bas_y = 370 ;
 
 	
-	protected static final int Goal_Haut_Droit_x = 75 ;
-	protected static final int Goal_Haut_Droit_y = 50 ;
+	protected static final int Goal_Droit_x = 815 ;
+	protected static final int Goal_Droit_Haut_y = 245 ;
+	protected static final int Goal_Droit_Bas_y = 370 ;
 	
-	protected static final int Goal_Bas_Droit_x = 75 ;
-	protected static final int Goal_Bas_Droit_y = 50 ;
+	public static int getGoalGaucheX() {
+		return Goal_Gauche_x;
+	}
+	public static int getGoalGaucheHautY() {
+		return Goal_Gauche_Haut_y;
+	}
+	public static int getGoalGaucheBasY() {
+		return Goal_Gauche_Bas_y;
+	}
+	public static int getGoalDroitX() {
+		return Goal_Droit_x;
+	}
+	public static int getGoalDroitHautY() {
+		return Goal_Droit_Haut_y;
+	}
+	public static int getGoalDroitBasY() {
+		return Goal_Droit_Bas_y;
+	}
 
 }
