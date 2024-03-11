@@ -1,5 +1,7 @@
 package data;
 
+import delimitations.Surface;
+
 public class Player {
 	
 	private String name;
@@ -129,6 +131,21 @@ public class Player {
 		return "Player " +name+ " :\n speed=" + speed + "\n pass=" + pass + "\n dribbles=" + dribbles + "\n defense=" + defense
 				+ "\n shoot=" + shoot + "\n number=" + number + "\n player_position="
 				+ player_position + "";
+	}
+	
+	public boolean isInShotSituation(String teamSide) {
+		if (teamSide == "dom") {
+			if ( (x > Surface.getSurfacedroiteHautGaucheX()) && (x < Surface.getSurfacedroiteHautDroiteX()) && (y > Surface.getSurfacedroiteHautGaucheY()) && (y < Surface.getSurfacedroiteBasGaucheY()) ) {
+				return true ;
+			}
+				
+		} else if (teamSide == "ext") {
+			if ( (x > Surface.getSurfacegaucheHautGaucheX()) && (x < Surface.getSurfacegaucheHautDroiteX()) && (y > Surface.getSurfacegaucheHautGaucheY()) && (y < Surface.getSurfacegaucheBasGaucheY()) ) {
+				return true ;
+			}	
+		}
+ 
+		return false;
 	}
 
 }

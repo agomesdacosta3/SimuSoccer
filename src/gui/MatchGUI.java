@@ -81,6 +81,7 @@ public class MatchGUI extends JFrame implements Runnable {
 	 * Initial status of for the start button.
 	 */
 	private boolean stop = true;
+	private boolean goal = false;
 
 	public MatchGUI(String title) {
 		super(title);
@@ -92,7 +93,7 @@ public class MatchGUI extends JFrame implements Runnable {
 		dashboard.getTeam_dom().createSquad("dom");
 		dashboard.getTeam_ext().createSquad("ext");
 		
-		dashboard.getMatch().firstEngagement();
+		dashboard.getMatch().firstKickoff();
 
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
@@ -160,15 +161,7 @@ public class MatchGUI extends JFrame implements Runnable {
 	}
 
 	private void updateValues() {
-		
-		// this part is for textual score printing.
-		
-		/* Match scoreteam1 = match.getScore();
-		scoreteam1Value.setText(scoreteam1.toString() + " ");
-		
-		Match scoreteam2 = match.getScore();
-		scoreteam2Value.setText(scoreteam2.toString() + " "); */
-		
+				
 		// This part is for textual time printing.
 	
 		CyclicCounter minute = chronometer.getMinute();
@@ -176,24 +169,29 @@ public class MatchGUI extends JFrame implements Runnable {
 
 		CyclicCounter second = chronometer.getSecond();
 		secondValue.setText(second.toString() + " ");
-		
-		// Test mouvement
-		
-		// dashboard.getTeam_dom().getSquad().get(0).setX(dashboard.getTeam_dom().getSquad().get(0).getX()+ 10);
-				
+			
 		Match match_ongoing = dashboard.getMatch();
 		
-		if (match_ongoing.getIsProcessOngoing() && (match_ongoing.getProcessType() == Match.process_type.PASS)) {
-			match_ongoing.passProcessing();
+		if (match_ongoing.getIsProcessOngoing() && (match_ongoing.getProcessType() == Match.process_type.SHOT)) {
+			
+			match_ongoing.shotProcessing();
+			
+		} else if (match_ongoing.getIsProcessOngoing() && (match_ongoing.getProcessType() == Match.process_type.GOAL)) {
+			
+			goal = true ;
+			match_ongoing.goalProcessing();
 			
 		} else {
 			
-			if (dashboard.getTeam_dom().isTeamHaveBall()) {
-				match_ongoing.initPassProcess(dashboard.getTeam_dom(), dashboard.getTeam_ext());
+			if (match_ongoing.getIsProcessOngoing() && (match_ongoing.getProcessType() == Match.process_type.PASS)) {
+				match_ongoing.passProcessing();
 			} else {
-				match_ongoing.initPassProcess(dashboard.getTeam_ext(), dashboard.getTeam_dom());
+				match_ongoing.initPassProcess();
 			}
-		
+			
+			match_ongoing.MoveDefender();
+			match_ongoing.MoveMidfielder();
+			match_ongoing.MoveForward();
 		}
 
 		// The dashboard needs to be reprinted when hour, minute or second values change.*/
@@ -214,11 +212,27 @@ public class MatchGUI extends JFrame implements Runnable {
 			}
 			chronometer.increment();
 			
+			if (goal) {
+				
+				// this part is for textual score printing.
+				score_squad_dom_value.setText(String.valueOf(dashboard.getTeam_dom().getScoreTeam()));
+				score_squad_ext_value.setText(String.valueOf(dashboard.getTeam_ext().getScoreTeam()));
+				
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				goal = false ;
+			} 
+			
 			// Ensure that the chronometer is not stopped during the iteration.
 			if (!stop) {
 				updateValues();
 				// ChangePlayers(chronometer);
 			}
+			
 		}
 	}
 	
@@ -228,6 +242,7 @@ public class MatchGUI extends JFrame implements Runnable {
 			if (!stop) {
 				stop = true;
 				startButton.setText(" Start ");
+				
 			} else {
 				stop = false;
 				startButton.setText(" Pause ");

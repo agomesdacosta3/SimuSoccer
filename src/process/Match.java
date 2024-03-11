@@ -6,6 +6,8 @@ import java.util.Random;
 import data.Ball;
 import data.Player;
 import data.Team;
+import delimitations.Goal;
+import delimitations.Surface;
 
 public class Match {
 
@@ -17,14 +19,18 @@ public class Match {
 	private Ball ball ;
 	
 	public enum process_type {
-		PASS, SHOT, KICKOFF, CORNER, THROW, MOVEMENT;
+		PASS, SHOT, KICKOFF, CORNER, THROW, GOAL;
 	}
+	
+	private boolean blockMovement = false ;
 	
 	private process_type process_type ;
 	
 	private Boolean is_process_ongoing = false ; 
 	
-	ArrayList<Player> pass_players = new ArrayList<>();
+	private ArrayList<Player> pass_players = new ArrayList<>();
+	
+	private ArrayList<Integer> shot_aim_positions = new ArrayList<>();
 
 
 	public Team getTeamDom() {
@@ -83,6 +89,14 @@ public class Match {
 		this.pass_players = pass_players;
 	}
 
+	public boolean isBlockMovement() {
+		return blockMovement;
+	}
+
+	public void setBlockMovement(boolean blockMovement) {
+		this.blockMovement = blockMovement;
+	}
+
 	public Match(Team team_dom, Team team_ext, int time_match, Ball ball) {
 		super();
 		this.team_dom = team_dom;
@@ -91,7 +105,7 @@ public class Match {
 		this.ball = ball;
 	}
 
-	public void firstEngagement() {
+	public void firstKickoff() {
 
 		Random random = new Random();
 		int nb;
@@ -112,6 +126,32 @@ public class Match {
 
 	}
 	
+	public void kickoff (String kickoff_side) {
+		
+		KickoffPlacement.placeKickoffPositions(team_dom, team_ext, kickoff_side) ;
+		
+		if (kickoff_side == "dom") {
+			
+			team_dom.getSquad().get(8).setX(440);
+			team_dom.getSquad().get(8).setY(315);
+			team_dom.getSquad().get(8).setBall(true);
+			
+		} else if (kickoff_side == "ext") {
+						
+			team_ext.getSquad().get(8).setX(440);
+			team_ext.getSquad().get(8).setY(315);
+			team_ext.getSquad().get(8).setBall(true);
+			
+		} else {
+			// return error message or code
+		}
+		
+		ball.setPositionx_Ball(440);
+		ball.setPositiony_Ball(306);
+		
+		setIsProcessOngoing(false);
+	}
+	
 	public void designPassBallPlayer (Team team_with_ball) {
 				
 		for (int i = 0; i < team_with_ball.getSquad().size(); i++) { 
@@ -129,13 +169,18 @@ public class Match {
 		pass_players.add(team_with_ball.getSquad().get(index_of_receiver_player)) ;
 	}
 	
-	public void initPassProcess (Team team_with_ball, Team team_without_ball) {
-
+	public void initPassProcess () {
+		
 		setIsProcessOngoing(true);
 		setProcessType(process_type.PASS);
-
-		designPassBallPlayer(team_with_ball);
-		designPassBallReceiver(team_with_ball);	
+		
+		if (team_dom.isTeamHaveBall()) {
+			designPassBallPlayer(team_dom);
+			designPassBallReceiver(team_dom);
+		} else {
+			designPassBallPlayer(team_ext);
+			designPassBallReceiver(team_ext);
+		}
 	}
 	
 	public void passProcessing () {
@@ -153,43 +198,260 @@ public class Match {
 			pass_players.get(0).setBall(false);
 			pass_players.get(1).setBall(true);
 			
-			pass_players.clear();
+			if (team_dom.isTeamHaveBall()) {
+			
+				ball.setPositionx_Ball(pass_players.get(1).getX() + 6);
+				ball.setPositiony_Ball(pass_players.get(1).getY());
+				
+			} else if (team_ext.isTeamHaveBall()) {
+				
+				ball.setPositionx_Ball(pass_players.get(1).getX() - 6);
+				ball.setPositiony_Ball(pass_players.get(1).getY());
+				
+			}
 			
 			setIsProcessOngoing(false);
 			setProcessType(null);
 			
+			if (team_dom.isTeamHaveBall()) {
+				
+				if (pass_players.get(1).isInShotSituation("dom")) {
+					
+					System.out.println("Shot situation begins with dom team");
+					setIsProcessOngoing(true);
+					setProcessType(process_type.SHOT);
+				}
+				
+			} else if (team_ext.isTeamHaveBall()) {
+				
+				if (pass_players.get(1).isInShotSituation("ext")) {
+					
+					System.out.println("Shot situation begins with ext team");
+					setIsProcessOngoing(true);
+					setProcessType(process_type.SHOT);
+				}
+			}
+			
+			pass_players.clear();
+			
 		} else {
 			
-			// Calcul de la distance entre la balle et le receveur
 		    double distance = Math.sqrt(Math.pow(receiver_x_position - ball_x_position, 2) + Math.pow(receiver_y_position - ball_y_position, 2));
 
-		    // Calcul du ratio pour déterminer le déplacement en x et y de la balle
-		    double ratio = 10 / distance;
+		    double ratio = 15 / distance;
 
-		    // Calcul du déplacement en x et y en fonction du ratio
 		    double deltaX = ratio * (receiver_x_position - ball_x_position);
 		    double deltaY = ratio * (receiver_y_position - ball_y_position);
 
-		    // Mettre à jour les positions de la balle
 		    ball.setPositionx_Ball(ball_x_position + deltaX);
 		    ball.setPositiony_Ball(ball_y_position + deltaY);
-			/*
-			if (ball_x_position > receiver_x_position ) {
-				ball.setPositionx_Ball(ball.getPositionx_Ball() - 10);
-			} else {
-				ball.setPositionx_Ball(ball.getPositionx_Ball() + 10);
-			}
-			
-			
-			if (ball_y_position > receiver_y_position ) {
-				ball.setPositiony_Ball(ball.getPositiony_Ball() - 10);
-			} else {
-				ball.setPositiony_Ball(ball.getPositiony_Ball() + 10);
-			}
-			*/
+		
 			
 		}
 		
+	}
+	
+	public void shotProcessing() {
+		
+		Player shot_player = findBallPlayer() ;
+				
+		Random random_y = new Random();
+		
+		
+		if (shot_aim_positions.isEmpty()) {
+			
+			if (team_dom.isTeamHaveBall()) {
+				
+				int shot_aim_position_y = random_y.nextInt(Goal.getGoalDroitBasY() - Goal.getGoalDroitHautY()) + Goal.getGoalDroitHautY();
+				
+				shot_aim_positions.add(Goal.getGoalDroitX() + 10);
+				shot_aim_positions.add(shot_aim_position_y);
+				
+			} else if (team_ext.isTeamHaveBall()) {
+				
+				int shot_aim_position_y = random_y.nextInt(Goal.getGoalGaucheBasY() - Goal.getGoalGaucheHautY()) + Goal.getGoalGaucheHautY();
+								
+				shot_aim_positions.add(Goal.getGoalGaucheX() - 10);
+				shot_aim_positions.add(shot_aim_position_y);
+				
+			} else {
+				// return error message or code
+			}	
+			
+		} else {
+			
+			int tolerance = 10 ;
+			
+			if ( ( (ball.getPositionx_Ball() > Goal.getGoalDroitX()) && (Math.abs(ball.getPositiony_Ball() - shot_aim_positions.get(1)) < tolerance) && (team_dom.isTeamHaveBall()) ) || ( (ball.getPositionx_Ball() < Goal.getGoalGaucheX()) && (Math.abs(ball.getPositiony_Ball() - shot_aim_positions.get(1)) < tolerance) && (team_ext.isTeamHaveBall()) ) ) {
+						
+				System.out.println("\nGoal\n");
+
+				setProcessType(process_type.GOAL);
+				
+				shot_aim_positions.clear();
+				
+			} else {
+				
+			    double distance = Math.sqrt(Math.pow(shot_aim_positions.get(0) - ball.getPositionx_Ball(), 2) + Math.pow(shot_aim_positions.get(1) - ball.getPositiony_Ball(), 2));
+
+			    double ratio = 15 / distance;
+
+			    double deltaX = ratio * (shot_aim_positions.get(0) - ball.getPositionx_Ball());
+			    double deltaY = ratio * (shot_aim_positions.get(1) - ball.getPositiony_Ball());
+
+			    ball.setPositionx_Ball(ball.getPositionx_Ball() + deltaX);
+			    ball.setPositiony_Ball(ball.getPositiony_Ball() + deltaY);		}
+			
+		}
+		
+	}
+	
+	public void goalProcessing() {
+		
+		setIsProcessOngoing(true);
+		setProcessType(process_type.KICKOFF);
+		
+		String kickoff_side = null ;
+		
+		if (team_dom.isTeamHaveBall()) {
+			
+			team_dom.setScoreTeam(team_dom.getScoreTeam() + 1 );
+			kickoff_side = "ext" ;
+			
+		} else if (team_ext.isTeamHaveBall()) {
+			
+			team_ext.setScoreTeam(team_ext.getScoreTeam() + 1 );			
+			kickoff_side = "dom" ;
+			
+		} else {
+			// return error message or code
+		}
+		
+		Player ball_player = findBallPlayer();
+		ball_player.setBall(false);
+		
+		kickoff(kickoff_side) ;
+	
+	}
+
+	public void MoveDefender() {
+		
+		if (team_dom.isTeamHaveBall()) {
+			
+			for (int i = 1; i < 5; i++) {
+				
+				if (team_dom.getSquad().get(i).getX() < 440) {
+		    		team_dom.getSquad().get(i).setX(team_dom.getSquad().get(i).getX() + 7);
+				}
+				
+				if (team_ext.getSquad().get(i).getX() < Surface.getSurfacedroiteHautGaucheX() + 50) {
+					team_ext.getSquad().get(i).setX(team_ext.getSquad().get(i).getX() + 7);
+				}
+			}
+			
+		} else {
+			
+			for (int i = 1; i < 5; i++) {
+				
+				if (team_dom.getSquad().get(i).getX() > Surface.getSurfacegaucheHautDroiteX() - 50) {
+		    		team_dom.getSquad().get(i).setX(team_dom.getSquad().get(i).getX() - 7);
+				}
+				
+				if (team_ext.getSquad().get(i).getX() > 440) {
+					team_ext.getSquad().get(i).setX(team_ext.getSquad().get(i).getX() - 7);
+				}
+			}
+			
+		}
+
+	}
+	
+	public void MoveMidfielder() {
+		
+		if (team_dom.isTeamHaveBall()) {
+			
+			for (int i = 5; i < 8; i++) {
+				
+				if (team_dom.getSquad().get(i).getX() < Surface.getSurfacedroiteHautGaucheX() - 80 ) {
+					team_dom.getSquad().get(i).setX(team_dom.getSquad().get(i).getX() + 7);
+				}
+				
+				if (team_ext.getSquad().get(i).getX() < Surface.getSurfacedroiteHautGaucheX() - 15 ) {
+					team_ext.getSquad().get(i).setX(team_ext.getSquad().get(i).getX() + 7);
+				}
+			}
+			
+		} else {
+			
+			for (int i = 5; i < 8; i++) {
+				
+				if (team_dom.getSquad().get(i).getX() > Surface.getSurfacegaucheHautDroiteX() + 15 ) {
+					team_dom.getSquad().get(i).setX(team_dom.getSquad().get(i).getX() - 7);
+				}
+				
+				if (team_ext.getSquad().get(i).getX() > Surface.getSurfacegaucheHautDroiteX() + 80 ) {
+					team_ext.getSquad().get(i).setX(team_ext.getSquad().get(i).getX() - 7);
+				}
+			}
+			
+		}
+		
+	}
+
+	public void MoveForward() {
+		
+		if (team_dom.isTeamHaveBall()) {
+			
+			for (int i = 8; i < 11; i++) {
+				
+				if (team_dom.getSquad().get(i).getX() < Surface.getSurfacedroiteHautGaucheX() + 50 ) {
+					team_dom.getSquad().get(i).setX(team_dom.getSquad().get(i).getX() + 7);
+				}
+				
+				if (team_ext.getSquad().get(i).getX() < 490 ) {
+					team_ext.getSquad().get(i).setX(team_ext.getSquad().get(i).getX() + 7);
+				}
+			}
+			
+		} else {
+			
+			for (int i = 8; i < 11; i++) {
+				
+				if (team_dom.getSquad().get(i).getX() > 390) {
+					team_dom.getSquad().get(i).setX(team_dom.getSquad().get(i).getX() - 7);
+				}
+				
+				if (team_ext.getSquad().get(i).getX() > Surface.getSurfacegaucheHautDroiteX() - 50 ) {
+					team_ext.getSquad().get(i).setX(team_ext.getSquad().get(i).getX() - 7);
+				}
+			}
+			
+		}
+		
+	}
+	
+	public Player findBallPlayer() {
+		
+		if (team_dom.isTeamHaveBall()) {
+			
+			for (int i = 0; i < team_dom.getSquad().size(); i++) { 
+	    		if(team_dom.getSquad().get(i).isBall() == true ) {
+	    			return team_dom.getSquad().get(i) ;
+	    		}
+			}
+			
+		} else if (team_ext.isTeamHaveBall()) {
+			
+			for (int i = 0; i < team_ext.getSquad().size(); i++) { 
+	    		if(team_ext.getSquad().get(i).isBall() == true ) {
+	    			return team_ext.getSquad().get(i) ;
+	    		}
+			}
+			
+		} else {
+			// Display error message or code
+		}
+		return null;
 	}
 	
 }
