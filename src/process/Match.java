@@ -19,7 +19,7 @@ public class Match {
 	private Ball ball ;
 	
 	public enum process_type {
-		PASS, SHOT, KICKOFF, CORNER, THROW, GOAL;
+		PASS, THROW, CORNER, SHOT, GOAL, KICKOFF ;
 	}
 	
 	private boolean blockMovement = false ;
@@ -106,6 +106,8 @@ public class Match {
 	}
 
 	public void firstKickoff() {
+		
+		System.out.println("Start of the Game !\n");
 
 		Random random = new Random();
 		int nb;
@@ -150,6 +152,7 @@ public class Match {
 		ball.setPositiony_Ball(306);
 		
 		setIsProcessOngoing(false);
+		setProcessType(process_type.PASS);
 	}
 	
 	public void designPassBallPlayer (Team team_with_ball) {
@@ -173,7 +176,8 @@ public class Match {
 		
 		setIsProcessOngoing(true);
 		setProcessType(process_type.PASS);
-		
+		setBlockMovement(false);
+
 		if (team_dom.isTeamHaveBall()) {
 			designPassBallPlayer(team_dom);
 			designPassBallReceiver(team_dom);
@@ -203,33 +207,37 @@ public class Match {
 				ball.setPositionx_Ball(pass_players.get(1).getX() + 6);
 				ball.setPositiony_Ball(pass_players.get(1).getY());
 				
+				if (pass_players.get(1).isInShotSituation("dom")) {
+									
+					System.out.println("Shot made by the home team");
+					setIsProcessOngoing(true);
+					setProcessType(process_type.SHOT);
+					setBlockMovement(true);
+					
+				} else {
+					setIsProcessOngoing(false);
+					setProcessType(null);
+				}
+				
 			} else if (team_ext.isTeamHaveBall()) {
 				
 				ball.setPositionx_Ball(pass_players.get(1).getX() - 6);
 				ball.setPositiony_Ball(pass_players.get(1).getY());
 				
-			}
-			
-			setIsProcessOngoing(false);
-			setProcessType(null);
-			
-			if (team_dom.isTeamHaveBall()) {
-				
-				if (pass_players.get(1).isInShotSituation("dom")) {
-					
-					System.out.println("Shot situation begins with dom team");
-					setIsProcessOngoing(true);
-					setProcessType(process_type.SHOT);
-				}
-				
-			} else if (team_ext.isTeamHaveBall()) {
-				
 				if (pass_players.get(1).isInShotSituation("ext")) {
-					
-					System.out.println("Shot situation begins with ext team");
+				
+					System.out.println("Shot made by the away team");
 					setIsProcessOngoing(true);
 					setProcessType(process_type.SHOT);
+					setBlockMovement(true);
+					
+				} else {
+					setIsProcessOngoing(false);
+					setProcessType(null);
 				}
+				
+			} else {
+				// return error message or code
 			}
 			
 			pass_players.clear();
@@ -257,7 +265,6 @@ public class Match {
 				
 		Random random_y = new Random();
 		
-		
 		if (shot_aim_positions.isEmpty()) {
 			
 			if (team_dom.isTeamHaveBall()) {
@@ -284,8 +291,6 @@ public class Match {
 			
 			if ( ( (ball.getPositionx_Ball() > Goal.getGoalDroitX()) && (Math.abs(ball.getPositiony_Ball() - shot_aim_positions.get(1)) < tolerance) && (team_dom.isTeamHaveBall()) ) || ( (ball.getPositionx_Ball() < Goal.getGoalGaucheX()) && (Math.abs(ball.getPositiony_Ball() - shot_aim_positions.get(1)) < tolerance) && (team_ext.isTeamHaveBall()) ) ) {
 						
-				System.out.println("\nGoal\n");
-
 				setProcessType(process_type.GOAL);
 				
 				shot_aim_positions.clear();

@@ -162,6 +162,7 @@ public class MatchGUI extends JFrame implements Runnable {
 
 	private void updateValues() {
 				
+		
 		// This part is for textual time printing.
 	
 		CyclicCounter minute = chronometer.getMinute();
@@ -188,7 +189,9 @@ public class MatchGUI extends JFrame implements Runnable {
 			} else {
 				match_ongoing.initPassProcess();
 			}
-			
+		}
+		
+		if ( !match_ongoing.isBlockMovement()) {
 			match_ongoing.MoveDefender();
 			match_ongoing.MoveMidfielder();
 			match_ongoing.MoveForward();
