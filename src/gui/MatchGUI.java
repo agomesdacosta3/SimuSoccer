@@ -196,6 +196,10 @@ public class MatchGUI extends JFrame implements Runnable {
 			match_ongoing.MoveMidfielder();
 			match_ongoing.MoveForward();
 		}
+		
+		if (match_ongoing.isRelocate_home_goalkeeper() || match_ongoing.isRelocate_away_goalkeeper()) {
+			match_ongoing.relocateGoalkeeper();
+		}
 
 		// The dashboard needs to be reprinted when hour, minute or second values change.*/
 		

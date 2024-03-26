@@ -24,6 +24,10 @@ public class Match {
 	
 	private boolean blockMovement = false ;
 	
+	private boolean relocate_home_goalkeeper = false ; 
+	
+	private boolean relocate_away_goalkeeper = false ; 
+	
 	private process_type process_type ;
 	
 	private Boolean is_process_ongoing = false ; 
@@ -95,6 +99,22 @@ public class Match {
 
 	public void setBlockMovement(boolean blockMovement) {
 		this.blockMovement = blockMovement;
+	}
+	
+	public boolean isRelocate_home_goalkeeper() {
+		return relocate_home_goalkeeper;
+	}
+
+	public void setRelocate_home_goalkeeper(boolean relocate_home_goalkeeper) {
+		this.relocate_home_goalkeeper = relocate_home_goalkeeper;
+	}
+
+	public boolean isRelocate_away_goalkeeper() {
+		return relocate_away_goalkeeper;
+	}
+
+	public void setRelocate_away_goalkeeper(boolean relocate_away_goalkeeper) {
+		this.relocate_away_goalkeeper = relocate_away_goalkeeper;
 	}
 
 	public Match(Team team_dom, Team team_ext, int time_match, Ball ball) {
@@ -179,11 +199,17 @@ public class Match {
 		setBlockMovement(false);
 
 		if (team_dom.isTeamHaveBall()) {
+			
 			designPassBallPlayer(team_dom);
 			designPassBallReceiver(team_dom);
-		} else {
+			
+		} else if (team_ext.isTeamHaveBall()) {
+
 			designPassBallPlayer(team_ext);
 			designPassBallReceiver(team_ext);
+			   
+		} else {
+			// return error message or code
 		}
 	}
 	
@@ -295,6 +321,31 @@ public class Match {
 				
 				shot_aim_positions.clear();
 				
+			} else if ( ( (Math.abs(ball.getPositionx_Ball() - team_ext.getSquad().get(0).getX()) < tolerance) && (Math.abs(ball.getPositiony_Ball() - team_ext.getSquad().get(0).getY()) < tolerance) && (team_dom.isTeamHaveBall()) ) || ( (Math.abs(ball.getPositionx_Ball() - team_dom.getSquad().get(0).getX()) < tolerance) && (Math.abs(ball.getPositiony_Ball() - team_dom.getSquad().get(0).getY()) < tolerance) && (team_ext.isTeamHaveBall()) ) ) {
+				
+				shot_aim_positions.clear();
+				
+				if (team_dom.isTeamHaveBall()) {
+					shot_player.setBall(false);
+					team_ext.getSquad().get(0).setBall(true);	
+					System.out.println("Shot saved by the away goalkeeper");
+					relocate_away_goalkeeper = true ;
+
+				}
+				
+				else if (team_ext.isTeamHaveBall()) {
+					shot_player.setBall(false);
+					team_dom.getSquad().get(0).setBall(true);
+					System.out.println("Shot saved by the home goalkeeper");
+					relocate_home_goalkeeper = true ;
+
+				} else {
+					// return error message or code
+				}
+				
+				setIsProcessOngoing(false);
+				setProcessType(null);
+			
 			} else {
 				
 			    double distance = Math.sqrt(Math.pow(shot_aim_positions.get(0) - ball.getPositionx_Ball(), 2) + Math.pow(shot_aim_positions.get(1) - ball.getPositiony_Ball(), 2));
@@ -303,9 +354,53 @@ public class Match {
 
 			    double deltaX = ratio * (shot_aim_positions.get(0) - ball.getPositionx_Ball());
 			    double deltaY = ratio * (shot_aim_positions.get(1) - ball.getPositiony_Ball());
+			    
+			    if (team_dom.isTeamHaveBall()) {
+			    	
+			    	if ( ( ( Math.abs( (shot_aim_positions.get(0) - 10) - team_ext.getSquad().get(0).getX() ) < tolerance) ) && ( Math.abs( ( shot_aim_positions.get(1) ) - team_ext.getSquad().get(0).getY() ) < tolerance) ) {
+					    
+			    		System.out.println("Away goalkeeper already at the right place to save the ball \n");
+			    	
+			    	} else {
+			    		
+					    System.out.println("Away goalkeeper moving for a save \n");
+			    		
+			    		double distance_goalkeeper = Math.sqrt(Math.pow((shot_aim_positions.get(0) - 3) - team_ext.getSquad().get(0).getX(), 2) + Math.pow(shot_aim_positions.get(1) - team_ext.getSquad().get(0).getY(), 2));
+					    double ratio_goalkeeper = 15 / distance_goalkeeper;
+					    double deltaX_goalkeeper = ratio_goalkeeper * ((shot_aim_positions.get(0) - 3) - team_ext.getSquad().get(0).getX());
+					    double deltaY_goalkeeper = ratio_goalkeeper * (shot_aim_positions.get(1) - team_ext.getSquad().get(0).getY());
+					    
+					    team_ext.getSquad().get(0).setX(team_ext.getSquad().get(0).getX() + deltaX_goalkeeper);
+					    team_ext.getSquad().get(0).setY(team_ext.getSquad().get(0).getY() + deltaY_goalkeeper);
+			    	}
+			    	
+			    } else if (team_ext.isTeamHaveBall()) {
+			    	
+			    	if ( ( ( Math.abs( (shot_aim_positions.get(0) + 10) - team_dom.getSquad().get(0).getX() ) < tolerance) ) && ( Math.abs( ( shot_aim_positions.get(1) ) - team_dom.getSquad().get(0).getY() ) < tolerance) ) {
+					
+			    		System.out.println("Home goalkeeper already at the right place to save the ball \n");
+
+			    	} else {
+			    		
+					    System.out.println("Home goalkeeper moving for a save \n");
+			    		
+			    		double distance_goalkeeper = Math.sqrt(Math.pow((shot_aim_positions.get(0) + 3) - team_dom.getSquad().get(0).getX(), 2) + Math.pow(shot_aim_positions.get(1) - team_dom.getSquad().get(0).getY(), 2));
+					    double ratio_goalkeeper = 15 / distance_goalkeeper;
+					    double deltaX_goalkeeper = ratio_goalkeeper * ((shot_aim_positions.get(0) + 3) - team_dom.getSquad().get(0).getX());
+					    double deltaY_goalkeeper = ratio_goalkeeper * (shot_aim_positions.get(1) - team_dom.getSquad().get(0).getY());
+					    
+					    team_dom.getSquad().get(0).setX(team_dom.getSquad().get(0).getX() + deltaX_goalkeeper);
+					    team_dom.getSquad().get(0).setY(team_dom.getSquad().get(0).getY() + deltaY_goalkeeper);
+			    	}
+			    	
+			    } else {
+			    	// return error code or message
+			    }
 
 			    ball.setPositionx_Ball(ball.getPositionx_Ball() + deltaX);
-			    ball.setPositiony_Ball(ball.getPositiony_Ball() + deltaY);		}
+			    ball.setPositiony_Ball(ball.getPositiony_Ball() + deltaY);		
+			    
+			}
 			
 		}
 		
@@ -433,6 +528,83 @@ public class Match {
 			
 		}
 		
+	}
+	
+	public void relocateGoalkeeper() {
+		
+		if (relocate_home_goalkeeper) {
+			
+			int tolerance = 10 ;
+			
+			if ( (!(team_dom.isTeamHaveBall()) ) || ( ( (Math.abs(team_dom.getSquad().get(0).getX() - process.KickoffPlacement.getDefault_x_goalkeeper_dom() ) < tolerance) ) && ( (Math.abs(team_dom.getSquad().get(0).getY() - process.KickoffPlacement.getDefault_y_goalkeeper_dom() ) < tolerance) ) ) ) {
+				
+			    System.out.println("Don't need to move or Home Default Position Reached\n");
+				
+				relocate_home_goalkeeper = false ;
+				
+			} else {
+				
+			    System.out.println("Home Default Position Not Reached Yet");
+			
+				double distance = Math.sqrt(Math.pow(team_dom.getSquad().get(0).getX() - process.KickoffPlacement.getDefault_x_goalkeeper_dom(), 2) + Math.pow(team_dom.getSquad().get(0).getY()- process.KickoffPlacement.getDefault_y_goalkeeper_dom(), 2));
+			    double ratio = 15 / distance;
+			    
+			    System.out.println("Position goal X : " + team_dom.getSquad().get(0).getX());
+			    System.out.println("Position goal Y : " + team_dom.getSquad().get(0).getY());
+			    System.out.println("Default position X: " + process.KickoffPlacement.getDefault_x_goalkeeper_dom());
+			    System.out.println("Default position Y: " + process.KickoffPlacement.getDefault_y_goalkeeper_dom());
+			    
+				System.out.println( "Calcul " + (Math.abs(team_dom.getSquad().get(0).getX() - process.KickoffPlacement.getDefault_x_goalkeeper_dom()) ) );
+	
+			    double delta_relocate_X = ratio * (process.KickoffPlacement.getDefault_x_goalkeeper_dom() - team_dom.getSquad().get(0).getX()  );
+			    double delta_relocate_Y = ratio * (process.KickoffPlacement.getDefault_y_goalkeeper_dom() - team_dom.getSquad().get(0).getY() );
+	
+			    team_dom.getSquad().get(0).setX(team_dom.getSquad().get(0).getX() + delta_relocate_X);
+			    team_dom.getSquad().get(0).setY(team_dom.getSquad().get(0).getY() + delta_relocate_Y);
+			    
+			    System.out.println("New Goal Position X : " + team_dom.getSquad().get(0).getX() + delta_relocate_X + "\n");
+			    System.out.println("New Goal Position Y : " + team_dom.getSquad().get(0).getY() + delta_relocate_Y + "\n");
+			}
+			
+		} else if (relocate_away_goalkeeper) {
+			
+			int tolerance = 10 ;
+			
+			if ( (!(team_ext.isTeamHaveBall()) ) || ( ( (Math.abs(team_ext.getSquad().get(0).getX() - process.KickoffPlacement.getDefault_x_goalkeeper_ext() ) < tolerance) ) && ( (Math.abs(team_ext.getSquad().get(0).getY() - process.KickoffPlacement.getDefault_y_goalkeeper_ext() ) < tolerance) ) ) ) {
+								
+			    System.out.println("Don't need to move or Away Default Position Reached\n");
+				
+				relocate_away_goalkeeper = false ;
+				
+			} else {
+				
+			    System.out.println("Away Default Position Not Reached Yet");
+			
+				double distance = Math.sqrt(Math.pow(team_ext.getSquad().get(0).getX() - process.KickoffPlacement.getDefault_x_goalkeeper_ext(), 2) + Math.pow(team_ext.getSquad().get(0).getY()- process.KickoffPlacement.getDefault_y_goalkeeper_ext(), 2));
+			    double ratio = 15 / distance;
+			    
+			    System.out.println("Position goal X : " + team_ext.getSquad().get(0).getX());
+			    System.out.println("Position goal Y : " + team_ext.getSquad().get(0).getY());
+			    System.out.println("Default position X : " + process.KickoffPlacement.getDefault_x_goalkeeper_ext());
+			    System.out.println("Default position Y : " + process.KickoffPlacement.getDefault_y_goalkeeper_ext());
+			    
+				System.out.println( "Calcul " + (Math.abs(team_ext.getSquad().get(0).getX() - process.KickoffPlacement.getDefault_x_goalkeeper_ext()) ) );
+	
+			    double delta_relocate_X = ratio * (process.KickoffPlacement.getDefault_x_goalkeeper_ext() - team_ext.getSquad().get(0).getX());
+			    double delta_relocate_Y = ratio * (process.KickoffPlacement.getDefault_y_goalkeeper_ext() - team_ext.getSquad().get(0).getY());
+	
+			    team_ext.getSquad().get(0).setX(team_ext.getSquad().get(0).getX() + delta_relocate_X);
+			    team_ext.getSquad().get(0).setY(team_ext.getSquad().get(0).getY() + delta_relocate_Y);
+			    
+			    System.out.println("New Goal Position X : " + team_ext.getSquad().get(0).getX() + delta_relocate_X + "\n");
+			    System.out.println("New Goal Position Y : " + team_ext.getSquad().get(0).getY() + delta_relocate_Y + "\n");
+			    
+			}
+			
+		} else {
+			// no need to relocate goalkeepers (not post shot situation)
+		}
+			
 	}
 	
 	public Player findBallPlayer() {
