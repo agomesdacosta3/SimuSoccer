@@ -162,6 +162,7 @@ public class MatchGUI extends JFrame implements Runnable {
 
 	private void updateValues() {
 				
+		
 		// This part is for textual time printing.
 	
 		CyclicCounter minute = chronometer.getMinute();
@@ -188,10 +189,16 @@ public class MatchGUI extends JFrame implements Runnable {
 			} else {
 				match_ongoing.initPassProcess();
 			}
-			
+		}
+		
+		if ( !match_ongoing.isBlockMovement()) {
 			match_ongoing.MoveDefender();
 			match_ongoing.MoveMidfielder();
 			match_ongoing.MoveForward();
+		}
+		
+		if (match_ongoing.isRelocate_home_goalkeeper() || match_ongoing.isRelocate_away_goalkeeper()) {
+			match_ongoing.relocateGoalkeeper();
 		}
 
 		// The dashboard needs to be reprinted when hour, minute or second values change.*/
@@ -202,7 +209,7 @@ public class MatchGUI extends JFrame implements Runnable {
 	/**
 	 * Defines what to do for each time unit (by default 1 second) : it increments the chronometer
 	 */
-	@Override
+	
 	public void run() {
 		while (!stop) {
 			try {
@@ -237,7 +244,7 @@ public class MatchGUI extends JFrame implements Runnable {
 	}
 	
 	private class StartStopAction implements ActionListener {
-		@Override
+		
 		public void actionPerformed(ActionEvent e) {
 			if (!stop) {
 				stop = true;
