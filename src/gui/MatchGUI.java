@@ -209,7 +209,7 @@ public class MatchGUI extends JFrame implements Runnable {
 	/**
 	 * Defines what to do for each time unit (by default 1 second) : it increments the chronometer
 	 */
-	@Override
+	
 	public void run() {
 		while (!stop) {
 			try {
@@ -244,7 +244,7 @@ public class MatchGUI extends JFrame implements Runnable {
 	}
 	
 	private class StartStopAction implements ActionListener {
-		@Override
+		
 		public void actionPerformed(ActionEvent e) {
 			if (!stop) {
 				stop = true;
